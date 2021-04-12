@@ -4,7 +4,7 @@
 
 <!DOCTYPE html>
 <%
-	ProductVO productVO = (ProductVO)session.getAttribute("productVO");
+	ProductVO productVO = (ProductVO)request.getAttribute("productVO");
 	System.out.println("addProductAction ½ÇÇà");
 %>
 <html>
