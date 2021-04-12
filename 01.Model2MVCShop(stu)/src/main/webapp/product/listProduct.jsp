@@ -28,12 +28,19 @@
 		 if(total%searchVO.getPageUnit() >0)
 			 totalpage +=1;
 	 }
-	 
-	 
- 
- 
- 
- 
+	 String title = null;
+	 String url1 = null;
+	 String url2 = null;
+	if( request.getParameter("menu").equals("manage")) {
+			 title = "惑前 包府";
+		 	 url1 = "updateProductView.do?prodNo=";
+		 	 url2 = "menu=manage";
+		}else{
+			 title = "惑前 格废炼雀";
+			 url1 = "getProduct.do?prodNo=";
+		 	 url2 = "menu=search";
+		 	 
+		}
  %>
  
  
@@ -44,7 +51,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>惑前 格废炼雀</title>
+<title></title>
 
 <link rel="stylesheet" href="/css/admin.css" type="text/css">
 
@@ -73,7 +80,7 @@ function fncGetProductList(){
 				<tr>
 					<td width="93%" class="ct_ttl01">
 					
-							惑前 包府
+							<%=title %>
 					
 					</td>
 				</tr>
@@ -185,7 +192,7 @@ function fncGetProductList(){
 		<td align="center"><%=no-- %></td>
 		<td></td>
 				
-				<td align="left"><a href="/getProduct.do?prodNo=<%=vo.getProdNo() %>&menu=manage"><%=vo.getProdName() %></a></td>
+				<td align="left"><a href="<%=url1%><%=vo.getProdNo()%>&<%=url2%>"><%=vo.getProdName() %></a></td>
 		
 		<td></td>
 		<td align="left"><%=vo.getPrice() %></td>
@@ -210,12 +217,12 @@ function fncGetProductList(){
 		<% 
 			for(int i = 1; i<= totalpage  ; i++){
 		%>		
-				<a href = "/listProduct.do?page=<%=i%>&menu=manage"><%=i%></a>
+				<a href = "/listProduct.do?page=<%=i%>&<%=url2%>"><%=i%></a>
 		<%
 			}
 		%>
 		 	
-		
+	
     	</td>
 	</tr>
 </table>

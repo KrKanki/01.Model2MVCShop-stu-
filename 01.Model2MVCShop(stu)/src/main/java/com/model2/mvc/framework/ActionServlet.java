@@ -23,7 +23,7 @@ public class ActionServlet extends HttpServlet {
 	
 	protected void service(HttpServletRequest request, HttpServletResponse response) 
 																									throws ServletException, IOException {
-		
+		System.out.println("ActionServlet 서비스메소드.");
 		String url = request.getRequestURI();
 		String contextPath = request.getContextPath();
 		String path = url.substring(contextPath.length()); // 리퀘스트의 URI 셋팅후 패스로 만듦. 

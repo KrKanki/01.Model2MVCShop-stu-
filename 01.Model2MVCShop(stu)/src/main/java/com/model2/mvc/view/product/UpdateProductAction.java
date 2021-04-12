@@ -17,18 +17,27 @@ public class UpdateProductAction extends Action {
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		
-		int prodNo = (Integer) request.getAttribute("prod_No");
+		System.out.println("UpdateProductAction 1 角青");
 		
-		SimpleDateFormat transFormat = new SimpleDateFormat("yyyy-MM-dd");
+		System.out.println(request.getParameter("prodNo"));
+		int prodNo = Integer.parseInt(request.getParameter("prodNo"));
 		
+		System.out.println(prodNo);
+		System.out.println("UpdateProductAction 2-1 角青");
+		//SimpleDateFormat transFormat = new SimpleDateFormat("yyyy-MM-dd");
+		System.out.println("UpdateProductAction 2-2 角青");
 		ProductVO productVO = new ProductVO();
+		System.out.println("UpdateProductAction 2-3 角青");
 		productVO.setProdNo(prodNo);
 		productVO.setProdName(request.getParameter("prodName"));
 		productVO.setProdDetail(request.getParameter("prodDetail"));
 		productVO.setManuDate(request.getParameter("manuDate"));
+		productVO.setFileName(request.getParameter("fileName"));
 		productVO.setPrice(Integer.parseInt(request.getParameter("price")));
-		productVO.setRegDate((Date)transFormat.parse(request.getParameter("regDate")));
 		
+		
+		//productVO.setRegDate((Date)transFormat.parse(request.getParameter("regDate")));
+		System.out.println("UpdateProductAction 3 角青");
 	
 		
 		ProductService service = new ProductServiceImpl();
@@ -41,7 +50,7 @@ public class UpdateProductAction extends Action {
 			session.setAttribute("prodName", productVO);
 		}
 		
-		return "redirect:/getUser.do?prodNo="+prodNo;
+		return "redirect:/getProduct.do?prodNo="+prodNo;
 	
 	}
 

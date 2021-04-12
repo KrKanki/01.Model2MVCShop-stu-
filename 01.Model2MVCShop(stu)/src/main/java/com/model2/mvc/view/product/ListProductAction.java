@@ -25,6 +25,12 @@ public class ListProductAction extends Action {
 		SearchVO searchVO = new SearchVO();
 		System.out.println("테스트");
 		int page= 1;
+		
+		String menu = request.getParameter("menu");
+		
+		
+		
+		
 		if(request.getParameter("page") != null ) 
 			page=Integer.parseInt(request.getParameter("page"));
 			
@@ -44,7 +50,7 @@ public class ListProductAction extends Action {
 		System.out.println("3");
 		request.setAttribute("map", map);
 		request.setAttribute("searchVO", searchVO);			
-		
+		request.setAttribute("menu", menu);
 		session.setAttribute("vo", searchVO);
 
 		System.out.println("listProductAction 끝");
@@ -54,6 +60,9 @@ public class ListProductAction extends Action {
 		
 		
 		System.out.println("이프문 이후 실행");
+		
+		
+		
 		return "forward:/product/listProduct.jsp";
 	}
 		

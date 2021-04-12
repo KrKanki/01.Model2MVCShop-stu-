@@ -44,7 +44,7 @@ public class RequestMapping {
 	
 	public Action getAction(String path){
 		Action action = map.get(path);  //맵의 값 지정은 트라이문 아래에 map.put에서 지정.    1번째 리퀘스트후 생성된것 계속 재사용함!
-		System.out.println("GetAction메소드");
+		System.out.println("Request Mapping GetAction메소드");
 		if(action == null){
 			System.out.println("if문실행");
 			
