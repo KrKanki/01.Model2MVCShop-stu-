@@ -139,7 +139,8 @@ public void updateProduct(ProductVO productVO) throws Exception {
 	
 	String sql = "UPDATE product SET "
 			+ " prod_name=?, prod_detail=?, manufacture_day=?, price=?, image_file=? "
-			+ " WHERE prod_no= ?;";
+			+ " WHERE prod_no= ?";
+	
 	
 	PreparedStatement stmt = con.prepareStatement(sql);
 	stmt.setString(1, productVO.getProdName());			
@@ -148,6 +149,15 @@ public void updateProduct(ProductVO productVO) throws Exception {
 	stmt.setInt(4, productVO.getPrice());				
 	stmt.setString(5, productVO.getFileName());
 	stmt.setInt(6, productVO.getProdNo());				
+	System.out.println(productVO.getProdName());
+	System.out.println(productVO.getProdDetail());
+	System.out.println(productVO.getManuDate());
+	System.out.println(productVO.getPrice());
+	System.out.println(productVO.getFileName());
+	System.out.println(productVO.getProdNo());
+	
+	
+	
 	
 	stmt.executeUpdate();
 	

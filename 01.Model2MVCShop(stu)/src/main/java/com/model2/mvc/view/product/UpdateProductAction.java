@@ -43,14 +43,8 @@ public class UpdateProductAction extends Action {
 		ProductService service = new ProductServiceImpl();
 		service.updateProduct(productVO);
 		
-		HttpSession session = request.getSession();
-		String sessionName=((ProductVO)session.getAttribute("product")).getProdName();
-		
-		if(sessionName.equals(prodNo)) {
-			session.setAttribute("prodName", productVO);
-		}
-		
-		return "redirect:/getProduct.do?prodNo="+prodNo;
+		 
+		return "redirect:/getProduct.do?prodNo="+prodNo+"&menu=search";
 	
 	}
 

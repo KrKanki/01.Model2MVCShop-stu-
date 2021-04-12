@@ -29,15 +29,15 @@
 			 totalpage +=1;
 	 }
 	 String title = null;
-	 String url1 = null;
+
 	 String url2 = null;
 	if( request.getParameter("menu").equals("manage")) {
 			 title = "상품 관리";
-		 	 url1 = "updateProductView.do?prodNo=";
+		 	 
 		 	 url2 = "menu=manage";
 		}else{
 			 title = "상품 목록조회";
-			 url1 = "getProduct.do?prodNo=";
+		
 		 	 url2 = "menu=search";
 		 	 
 		}
@@ -186,22 +186,22 @@ function fncGetProductList(){
 		<%
 			int no = list.size();
 			for(int i= 0; i< list.size(); i++){
-				ProductVO vo = (ProductVO)list.get(i);
+				ProductVO productVO = (ProductVO)list.get(i);
 		%>		
 	<tr class="ct_list_pop">
 		<td align="center"><%=no-- %></td>
 		<td></td>
 				
-				<td align="left"><a href="<%=url1%><%=vo.getProdNo()%>&<%=url2%>"><%=vo.getProdName() %></a></td>
+				<td align="left"><a href="getProduct.do?prodNo=<%=productVO.getProdNo()%>&<%=url2%>"><%=productVO.getProdName() %></a></td>
 		
 		<td></td>
-		<td align="left"><%=vo.getPrice() %></td>
+		<td align="left"><%=productVO.getPrice() %></td>
 		<td></td>
-		<td align="left"><%=vo.getRegDate() %></td>
+		<td align="left"><%=productVO.getRegDate() %></td>
 		<td></td>
 		<td align="left">
 		
-			배송중<%=vo.getProTranCode() %>
+			배송중<%-- =productVO.getProTranCode() --%>
 		
 		</td>	
 	</tr>

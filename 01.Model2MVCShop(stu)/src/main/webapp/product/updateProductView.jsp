@@ -3,7 +3,7 @@
     pageEncoding="EUC-KR"%>
 
 <% 
-	ProductVO VO = (ProductVO)request.getAttribute("productVO");
+	ProductVO productVO = (ProductVO)request.getAttribute("productVO");
 	
 	%>
 
@@ -57,7 +57,7 @@ function fncAddProduct(){
 
 <form name="detailForm" method="post" >
 
-<input type="hidden" name="prodNo" value="<%=VO.getProdNo()%>"/>
+<input type="hidden" name="prodNo" value="<%=productVO.getProdNo()%>"/>
 
 <table width="100%" height="37" border="0" cellpadding="0" cellspacing="0">
 	<tr>
@@ -92,7 +92,7 @@ function fncAddProduct(){
 				<tr>
 					<td width="105">
 						<input 	type="text" name="prodName" class="ct_input_g" 
-										style="width: 100px; height: 19px" maxLength="20" value="<%=VO.getProdName()%>">
+										style="width: 100px; height: 19px" maxLength="20" value="<%=productVO.getProdName()%>">
 					</td>
 				</tr>
 			</table>
@@ -107,7 +107,7 @@ function fncAddProduct(){
 		</td>
 		<td bgcolor="D6D6D6" width="1"></td>
 		<td class="ct_write01">
-			<input type="text" name="prodDetail" value="<%=VO.getProdDetail() %>" class="ct_input_g" 
+			<input type="text" name="prodDetail" value="<%=productVO.getProdDetail() %>" class="ct_input_g" 
 						style="width: 100px; height: 19px" maxLength="10"	minLength="6">
 		</td>
 	</tr>
@@ -120,7 +120,7 @@ function fncAddProduct(){
 		</td>
 		<td bgcolor="D6D6D6" width="1"></td>
 		<td class="ct_write01">
-			<input type="text" readonly="readonly" name="manuDate" value="<%=VO.getManuDate() %>"	
+			<input type="text" readonly="readonly" name="manuDate" value="<%=productVO.getManuDate() %>"	
 						class="ct_input_g" style="width: 100px; height: 19px" maxLength="10" minLength="6">&nbsp;
 						<img 	src="../images/ct_icon_date.gif" width="15" height="15" 
 									onclick="show_calendar('document.detailForm.manuDate', document.detailForm.manuDate.value)" />
@@ -135,7 +135,7 @@ function fncAddProduct(){
 		</td>
 		<td bgcolor="D6D6D6" width="1"></td>
 		<td class="ct_write01">
-			<input type="text" name="price" value="<%=VO.getPrice()%>" 
+			<input type="text" name="price" value="<%=productVO.getPrice()%>" 
 						class="ct_input_g" style="width: 100px; height: 19px" maxLength="50"/>&nbsp;원
 		</td>
 	</tr>
@@ -146,8 +146,8 @@ function fncAddProduct(){
 		<td width="104" class="ct_write">상품이미지</td>
 		<td bgcolor="D6D6D6" width="1"></td>
 		<td class="ct_write01">
-			<input	type="file" name="fileName" class="ct_input_g" 
-						style="width: 200px; height: 19px" maxLength="13" value="<%=VO.getFileName()%>"/>
+			<input	type="text" name="fileName" class="ct_input_g" 
+						style="width: 200px; height: 19px" maxLength="13" value="<%=productVO.getFileName()%>"/>
 		</td>
 	</tr>
 	<tr>

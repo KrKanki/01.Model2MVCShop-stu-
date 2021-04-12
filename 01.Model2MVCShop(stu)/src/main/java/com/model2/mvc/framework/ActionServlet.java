@@ -36,7 +36,7 @@ public class ActionServlet extends HttpServlet {
 			
 			String resultPage=action.execute(request, response);   // 리절트페이지의 값은 redirect:/~~~ or forward:/~~~ 로 나옴.
 			String result=resultPage.substring(resultPage.indexOf(":")+1);   // 리절트페이지 값의 : 이후의 /~~~ 리절트값 반영 
-			System.out.println(" 리졀트페이지+ 리절트 : "+resultPage + result); 
+			System.out.println(" 리졀트페이지 : "+resultPage +" 리절트 :"+ result); 
 			
 			if(resultPage.startsWith("forward:"))   // 시작이 포워드면 httputil 의 포워드 메소드 실행 아니면 redirect 실행!.
 				HttpUtil.forward(request, response, result); 

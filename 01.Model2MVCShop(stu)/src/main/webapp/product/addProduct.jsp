@@ -4,7 +4,7 @@
 
 <!DOCTYPE html>
 <%
-	ProductVO VO = (ProductVO)session.getAttribute("VO");
+	ProductVO productVO = (ProductVO)session.getAttribute("productVO");
 	System.out.println("addProductAction 실행");
 %>
 <html>
@@ -48,7 +48,7 @@
 		<td class="ct_write01">
 			<table width="100%" border="0" cellspacing="0" cellpadding="0">
 				<tr>
-					<td width="105"><%=VO.getProdName()%></td>
+					<td width="105"><%=productVO.getProdName()%></td>
 					<td></td>
 				</tr>
 			</table>
@@ -63,7 +63,7 @@
 			상품상세정보 <img  src="/images/ct_icon_red.gif" width="3" height="3" align="absmiddle"/>
 		</td>
 		<td bgcolor="D6D6D6" width="1"></td>
-		<td class="ct_write01"><%=VO.getProdDetail()%></td>
+		<td class="ct_write01"><%=productVO.getProdDetail()%></td>
 	</tr>
 	<tr>
 		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
@@ -74,7 +74,7 @@
 			제조일자<img	src="/images/ct_icon_red.gif" width="3" height="3" align="absmiddle"/>
 		</td>
 		<td bgcolor="D6D6D6" width="1"></td>
-		<td class="ct_write01"><%=VO.getManuDate()%></td>
+		<td class="ct_write01"><%=productVO.getManuDate()%></td>
 	</tr>
 	<tr>
 		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
@@ -84,7 +84,7 @@
 			가격<img 	src="/images/ct_icon_red.gif" width="3" height="3" align="absmiddle"/>
 		</td>
 		<td bgcolor="D6D6D6" width="1"></td>
-		<td class="ct_write01"><%=VO.getPrice()%></td>
+		<td class="ct_write01"><%=productVO.getPrice()%></td>
 	</tr>
 
 	<tr>
@@ -93,7 +93,7 @@
 	<tr>
 		<td width="104" class="ct_write">상품이미지</td>
 		<td bgcolor="D6D6D6" width="1"></td>
-		<td class="ct_write01"><%=VO.getFileName()%>
+		<td class="ct_write01"><%=productVO.getFileName()%>
 			<!-- 테이블 시작 -->
 			<table border="0" cellspacing="0" cellpadding="0">
 				<tr>

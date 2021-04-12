@@ -13,27 +13,25 @@ import com.model2.mvc.service.user.vo.UserVO;
 
 public class GetProductAction extends Action {
 
-
-
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		
 		
 		int prodNo=Integer.parseInt(request.getParameter("prodNo"));
-		
+		String menu = request.getParameter("menu");
 		ProductService service=new ProductServiceImpl();
-		ProductVO vo=service.getProduct(prodNo);
+		ProductVO productVO=service.getProduct(prodNo);
 		
-		request.setAttribute("vo", vo);
-
-		return "forward:/product/getProduct.jsp";
-		
-		
-		
-		
-		
-		
-		
+		request.setAttribute("productVO", productVO);
+		System.out.println(prodNo);
+	
+		if(menu.equals("manage")) {
+			return "forward:/product/updateProductView.jsp";
+		}else {
+				
+			return "forward:/product/getProduct.jsp";
+		}
+	
 		
 		
 	}

@@ -5,7 +5,7 @@
 
 <%
 	System.out.println("getProduct.jsp 실행");
-	ProductVO vo = (ProductVO)request.getAttribute("vo");
+	ProductVO productVO = (ProductVO)request.getAttribute("productVO");
 	
 %>	
 
@@ -51,7 +51,7 @@
 		<td class="ct_write01">
 			<table width="100%" border="0" cellspacing="0" cellpadding="0">
 				<tr>
-					<td width="105"><%=vo.getProdNo() %></td>
+					<td width="105"><%=productVO.getProdNo() %></td>
 				</tr>
 			</table>
 		</td>
@@ -64,7 +64,7 @@
 			상품명 <img src="/images/ct_icon_red.gif" width="3" height="3" align="absmiddle"/>
 		</td>
 		<td bgcolor="D6D6D6" width="1"></td>
-		<td class="ct_write01"><%=vo.getProdName() %></td>
+		<td class="ct_write01"><%=productVO.getProdName() %></td>
 	</tr>
 	<tr>
 		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
@@ -76,7 +76,7 @@
 		<td bgcolor="D6D6D6" width="1"></td>
 		<td class="ct_write01">
 			<%-- ><img src = "<%=vo.getFileName() %>"/>--%>
-			<%=vo.getFileName() %>
+			<%=productVO.getFileName() %>
 		</td>
 	</tr>
 	<tr>
@@ -87,7 +87,7 @@
 			상품상세정보 <img src="/images/ct_icon_red.gif" width="3" height="3" align="absmiddle"/>
 		</td>
 		<td bgcolor="D6D6D6" width="1"></td>
-		<td class="ct_write01"><%=vo.getProdDetail() %></td>
+		<td class="ct_write01"><%=productVO.getProdDetail() %></td>
 	</tr>
 	<tr>
 		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
@@ -95,7 +95,7 @@
 	<tr>
 		<td width="104" class="ct_write">제조일자</td>
 		<td bgcolor="D6D6D6" width="1"></td>
-		<td class="ct_write01"><%=vo.getManuDate() %></td>
+		<td class="ct_write01"><%=productVO.getManuDate() %></td>
 	</tr>
 	<tr>
 		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
@@ -103,7 +103,7 @@
 	<tr>
 		<td width="104" class="ct_write">가격</td>
 		<td bgcolor="D6D6D6" width="1"></td>
-		<td class="ct_write01"><%=vo.getPrice() %></td>
+		<td class="ct_write01"><%=productVO.getPrice() %></td>
 	</tr>
 	<tr>
 		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
@@ -111,7 +111,7 @@
 	<tr>
 		<td width="104" class="ct_write">등록일자</td>
 		<td bgcolor="D6D6D6" width="1"></td>
-		<td class="ct_write01"><%=vo.getRegDate() %></td>
+		<td class="ct_write01"><%=productVO.getRegDate() %></td>
 	</tr>
 	<tr>
 		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
@@ -130,7 +130,7 @@
 					<img src="/images/ct_btnbg01.gif" width="17" height="23"/>
 				</td>
 				<td background="/images/ct_btnbg02.gif" class="ct_btn01" style="padding-top: 3px;">
-					<a href="/addPurchaseView.do?prod_no=<%=vo.getProdNo()%>">구매</a>
+					<a href="/addPurchaseView.do?prod_no=<%=productVO.getProdNo()%>">구매</a>
 				</td>
 				<td width="14" height="23">
 					<img src="/images/ct_btnbg03.gif" width="14" height="23">
