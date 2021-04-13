@@ -4,15 +4,23 @@ import java.util.HashMap;
 
 import com.model2.mvc.common.SearchVO;
 import com.model2.mvc.service.purchase.PurchaseService;
+import com.model2.mvc.service.purchase.dao.PurchaseDAO;
 import com.model2.mvc.service.purchase.vo.PurchaseVO;
 
 public class PurchaseServiceImpl implements PurchaseService {
 
 	private PurchaseDAO purchaseDAO;
-	@Override
+ 
+	public PurchaseServiceImpl() {
+		purchaseDAO = new PurchaseDAO();
+	}
 	public void addPurchase(PurchaseVO purchaseVO) throws Exception {
 		// TODO Auto-generated method stub
+		System.out.println("PurchaseServiceImpl addPurchase 실행");
+		System.out.println(purchaseVO);
+		purchaseDAO.insertPurchase(purchaseVO);
 		
+		System.out.println("PurchaseServiceImpl addPurchase 종료");
 
 	}
 
@@ -25,6 +33,7 @@ public class PurchaseServiceImpl implements PurchaseService {
 	@Override
 	public PurchaseVO getPurchase2(int ProdNo) throws Exception {
 		// TODO Auto-generated method stub
+		
 		return null;
 	}
 

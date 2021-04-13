@@ -19,47 +19,58 @@ public class ListProductAction extends Action {
 	public String execute(HttpServletRequest request, 
 							HttpServletResponse response) throws Exception {
 		HttpSession session = request.getSession();
-		
-		
-		System.out.println("listproductaction 실행");
-		SearchVO searchVO = new SearchVO();
-		System.out.println("테스트");
 		int page= 1;
-		
+		System.out.println("listproductaction 실행");
 		String menu = request.getParameter("menu");
+		request.setAttribute("menu", menu);
 		
-		
-		
-		
-		if(request.getParameter("page") != null ) 
+		if(request.getParameter("page") != null ) { 
 			page=Integer.parseInt(request.getParameter("page"));
+		}else if(request.getParameter("page") == null) {
+			session.removeAttribute("searchCondition");
+			session.removeAttribute("searchKeyword");
+		}else if(request.getMethod() == "Post") {
+			session.removeAttribute("searchCondition");
+			session.removeAttribute("searchKeyword");
+		}
 			
+		SearchVO searchVO = new SearchVO();
 		
 		searchVO.setPage(page);
-		searchVO.setSearchCondition(request.getParameter("searchCondition"));
-		searchVO.setSearchKeyword(request.getParameter("searchKeyword"));
+
+		searchVO.setSearchCondition((String)session.getAttribute("searchCondition"));
+		searchVO.setSearchKeyword((String)session.getAttribute("searchKeyword"));
 		
-		System.out.println(searchVO.getSearchCondition());
-		System.out.println(searchVO.getSearchKeyword());
-		System.out.println("1");
+		if(searchVO.getSearchCondition() == null) {
+			
+			searchVO.setSearchCondition(request.getParameter("searchCondition"));
+			searchVO.setSearchKeyword(request.getParameter("searchKeyword"));
+	
+			String sc = searchVO.getSearchCondition();
+			String sk = searchVO.getSearchKeyword();
+			
+		}
+			searchVO.setSearchCondition("searchVO", sc);
+		
+		
+
 		String pageUnit = getServletContext().getInitParameter("pageSize");
 		searchVO.setPageUnit(Integer.parseInt(pageUnit));
 		System.out.println("2");
+		
 		ProductService service = new ProductServiceImpl();
 		HashMap<String, Object> map =  service.getProductList(searchVO);
-		System.out.println("3");
+
+		
 		request.setAttribute("map", map);
 		request.setAttribute("searchVO", searchVO);			
-		request.setAttribute("menu", menu);
-		session.setAttribute("vo", searchVO);
-
+		session.setAttribute("searchVO", searchVO);
+	
+		System.out.println(searchVO);
 		System.out.println("listProductAction 끝");
 	
 		
-		
-		
-		
-		System.out.println("이프문 이후 실행");
+	
 		
 		
 		

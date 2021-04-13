@@ -6,6 +6,8 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import javax.servlet.http.HttpSession;
+
 import com.model2.mvc.common.SearchVO;
 import com.model2.mvc.common.util.DBUtil;
 import com.model2.mvc.service.product.vo.ProductVO;
@@ -40,18 +42,25 @@ public class ProductDAO {
 		Connection con = DBUtil.getConnection();
 		System.out.println("productDAO getProductList 실행");		
 		String sql = "SELECT * FROM PRODUCT" ;
- 
+		
+		
+		
 		if(searchVO.getSearchCondition() != null) {
 			if (searchVO.getSearchCondition().equals("0")) {
-				sql += " where prod_no IN (" + searchVO.getSearchKeyword()
-						+ ")";
+				sql += " where prod_no LIKE ('%" + searchVO.getSearchKeyword()
+						+ "%')";
+				
 			} else if (searchVO.getSearchCondition().equals("1")) {
-				sql += " where prod_name IN ('" + searchVO.getSearchKeyword()
-						+ "')";
+				sql += " where prod_name LIKE ('%" + searchVO.getSearchKeyword()
+						+ "%')";
 			} else {
-				sql += " where price IN (" + searchVO.getSearchKeyword()
-						+ ")";
-			}
+				sql += " where price LIKE ('%" + searchVO.getSearchKeyword()
+						+ "%')";
+			}		
+			searchVO.setSearchCondition(searchVO.getSearchCondition());
+			searchVO.setSearchKeyword(searchVO.getSearchKeyword());
+			
+			System.out.println(searchVO+" searcVO 값 확인");
 		}
 		sql += " ORDER BY prod_no ";
 		System.out.println("1-1번디버깅");

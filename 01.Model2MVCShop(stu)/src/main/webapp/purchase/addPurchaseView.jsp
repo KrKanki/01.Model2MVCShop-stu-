@@ -1,3 +1,4 @@
+<%@page import="com.model2.mvc.service.purchase.vo.PurchaseVO"%>
 <%@page import="com.model2.mvc.service.user.vo.UserVO"%>
 <%@page import="com.model2.mvc.service.product.vo.ProductVO"%>
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
@@ -8,9 +9,9 @@
 
 <%
 	
-	ProductVO productVO = (ProductVO)request.getAttribute("productVO");
+	ProductVO productVO = (ProductVO)session.getAttribute("productVO");
 	UserVO userVO = (UserVO)session.getAttribute("user");
-
+	PurchaseVO purchaseVO = (PurchaseVO)session.getAttribute("purchaseVO");
 %>
 
 
@@ -128,7 +129,7 @@ function fncAddPurchase() {
 		</td>
 		<td bgcolor="D6D6D6" width="1"></td>
 		<td class="ct_write01"><%=userVO.getUserId()%></td>
-		<input type="hidden" name="buyerId" value="<%=userVO.getUserId()%>" />
+		<input type="hidden" name="buyerId" value="<%=userVO.getUserId()%> " />
 	</tr>
 	<tr>
 		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
@@ -174,7 +175,7 @@ function fncAddPurchase() {
 		<td bgcolor="D6D6D6" width="1"></td>
 		<td class="ct_write01">
 			<input 	type="text" name="receiverAddr" class="ct_input_g" 
-							style="width: 100px; height: 19px" maxLength="20" 	value="<%=userVO.getAddr() %>" />
+							style="width: 100px; height: 19px" maxLength="20" 	value="<%= userVO.getAddr()%>" />
 		</td>
 	</tr>
 	<tr>

@@ -30,16 +30,20 @@
 	 }
 	 String title = null;
 
+	 String url1 = null;
 	 String url2 = null;
+	 String url3 = null;
+	 
 	if( request.getParameter("menu").equals("manage")) {
 			 title = "惑前 包府";
-		 	 
-		 	 url2 = "menu=manage";
+		 	 url1 = "menu=manage";
+		 	 url2 = searchVO.getSearchCondition();
+ 			 url3 = searchVO.getSearchKeyword();
 		}else{
 			 title = "惑前 格废炼雀";
-		
-		 	 url2 = "menu=search";
-		 	 
+			 url1 = "menu=search";
+			 url2 = searchVO.getSearchCondition();
+ 			 url3 = searchVO.getSearchKeyword();
 		}
  %>
  
@@ -192,7 +196,7 @@ function fncGetProductList(){
 		<td align="center"><%=no-- %></td>
 		<td></td>
 				
-				<td align="left"><a href="getProduct.do?prodNo=<%=productVO.getProdNo()%>&<%=url2%>"><%=productVO.getProdName() %></a></td>
+				<td align="left"><a href="getProduct.do?prodNo=<%=productVO.getProdNo()%>&<%=url1%>"><%=productVO.getProdName() %></a></td>
 		
 		<td></td>
 		<td align="left"><%=productVO.getPrice() %></td>
@@ -217,7 +221,7 @@ function fncGetProductList(){
 		<% 
 			for(int i = 1; i<= totalpage  ; i++){
 		%>		
-				<a href = "/listProduct.do?page=<%=i%>&<%=url2%>"><%=i%></a>
+				<a href = "/listProduct.do?page=<%=i%>&<%=url1%>&SearchCondition=<%=url2%>&SearchKeyward=<%=url3%>"><%=i%></a>
 		<%
 			}
 		%>

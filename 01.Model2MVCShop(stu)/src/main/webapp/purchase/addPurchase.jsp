@@ -4,9 +4,9 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="EUC-KR"%>
 
-<%	 	ProductVO productVO = (ProductVO)request.getAttribute("productVO");
-		UserVO userVO = (UserVO)session.getAttribute("user");
-		PurchaseVO purchaseVO = (PurchaseVO)request.getAttribute("purchaseVO");
+<%
+
+		PurchaseVO purchaseVO = (PurchaseVO)session.getAttribute("purchaseVO");
 		
 		String payment;
 		if(request.getParameter("paymentOption").equals("1")){
@@ -34,12 +34,12 @@
 <table border=1>
 	<tr>
 		<td>물품번호</td>
-		<td><%= productVO.getProdNo() %></td>
+		<td><%= purchaseVO.getPurchaseProd().getProdNo() %></td>
 		<td></td>
 	</tr>
 	<tr>
 		<td>구매자아이디</td>
-		<td><%=purchaseVO.getBuyer() %></td>
+		<td><%=purchaseVO.getBuyer().getUserId() %></td>
 		<td></td>
 	</tr>
 	<tr>
