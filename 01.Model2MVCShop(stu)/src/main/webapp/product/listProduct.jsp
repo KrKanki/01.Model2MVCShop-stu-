@@ -221,10 +221,10 @@ function fncGetProductList(){
 		<% 
 			int set=0; //  총 몇세트
 			int ps = 5;// 한번에 나올 페이지수
-			int a ;
-			int b = 1;
+			int a =0 ; // 나머지페이지
+			int b = 0; //  몇번돌것인지
 			int c = 0;
-				
+			int i = 0;	
 				 if(totalpage> 0){
 					set = totalpage / ps;
 					 if(totalpage%ps  >0){
@@ -242,7 +242,7 @@ function fncGetProductList(){
 								set++;			
 							 }
 						 }
-					 for(a = 1+(set*b); a<=ps*set; a++){%>	
+					 for( i = 1+(set*b); i<=ps*set+b*a; i++){%>	
 					<a href = "/listProduct.do?page=<%=i%>&<%=url1%>"><%=i%></a>	 
 				<% 	 }
 				 }
