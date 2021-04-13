@@ -120,7 +120,7 @@ function fncGetProductList(){
 				<option value ="1" selected>상품명</option>
 				<option value ="2">상품가격</option>
 				<%
-				}else{
+				}else if(searchVO.getSearchCondition().equals("2")){
 					%>
 				<option value ="0" >상품번호</option>
 				<option value ="1" >상품명</option>
@@ -138,7 +138,7 @@ function fncGetProductList(){
 	 %>
 		 <td align="right">
 			<select name="searchCondition" class="ct_input_g" style="width:80px">
-				<option value="0">상품번호</option>
+				<option value="0" selected>상품번호</option>
 				<option value="1">상품명</option>
 				<option value="2">상품가격</option>
 			</select>
@@ -219,11 +219,33 @@ function fncGetProductList(){
 	<tr>
 		<td align="center">
 		<% 
-			for(int i = 1; i<= totalpage  ; i++){
-		%>		
-				<a href = "/listProduct.do?page=<%=i%>&<%=url1%>&SearchCondition=<%=url2%>&SearchKeyward=<%=url3%>"><%=i%></a>
-		<%
-			}
+			int set=0; //  총 몇세트
+			int ps = 5;// 한번에 나올 페이지수
+			int a ;
+			int b = 1;
+			int c = 0;
+				
+				 if(totalpage> 0){
+					set = totalpage / ps;
+					 if(totalpage%ps  >0){
+					a =	totalpage%ps ;
+						set++;			
+					 }
+				 }
+				 
+				 for(b = 0; b< set  ; b++){	
+					
+					 if(currentPage> 0){
+							c = currentPage / ps;
+							 if(currentPage%ps  >0){
+							a =	currentPage%ps ;
+								set++;			
+							 }
+						 }
+					 for(a = 1+(set*b); a<=ps*set; a++){%>	
+					<a href = "/listProduct.do?page=<%=i%>&<%=url1%>"><%=i%></a>	 
+				<% 	 }
+				 }
 		%>
 		 	
 	

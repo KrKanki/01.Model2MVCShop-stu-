@@ -32,6 +32,7 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	public HashMap<String, Object> getProductList(SearchVO searchVO) throws Exception {
 		// TODO Auto-generated method stub
+		System.out.println(searchVO+" serviceimpl");
 		return productDAO.getProductList(searchVO);
 	}
 

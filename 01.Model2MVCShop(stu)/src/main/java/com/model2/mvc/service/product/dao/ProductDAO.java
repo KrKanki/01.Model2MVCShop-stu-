@@ -39,12 +39,12 @@ public class ProductDAO {
 	
 	public HashMap<String,Object> getProductList(SearchVO searchVO) throws Exception {
 		
+		System.out.println(searchVO);
 		Connection con = DBUtil.getConnection();
 		System.out.println("productDAO getProductList 실행");		
 		String sql = "SELECT * FROM PRODUCT" ;
-		
-		
-		
+		System.out.println(searchVO);
+		System.out.println("if문 전 시작 ");
 		if(searchVO.getSearchCondition() != null) {
 			if (searchVO.getSearchCondition().equals("0")) {
 				sql += " where prod_no LIKE ('%" + searchVO.getSearchKeyword()
@@ -53,11 +53,13 @@ public class ProductDAO {
 			} else if (searchVO.getSearchCondition().equals("1")) {
 				sql += " where prod_name LIKE ('%" + searchVO.getSearchKeyword()
 						+ "%')";
-			} else {
+			} else if (searchVO.getSearchCondition().equals("2")){
 				sql += " where price LIKE ('%" + searchVO.getSearchKeyword()
 						+ "%')";
 			}		
 			searchVO.setSearchCondition(searchVO.getSearchCondition());
+			System.out.println(searchVO.getSearchCondition());
+			System.out.println(searchVO.getSearchKeyword());
 			searchVO.setSearchKeyword(searchVO.getSearchKeyword());
 			
 			System.out.println(searchVO+" searcVO 값 확인");

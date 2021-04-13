@@ -35,6 +35,7 @@ public class SearchVO {
 		return searchKeyword;
 	}
 	public void setSearchKeyword(String searchKeyword) {
+		
 		this.searchKeyword = searchKeyword;
 	}
 	
