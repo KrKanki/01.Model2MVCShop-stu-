@@ -114,7 +114,8 @@
 		<td class="ct_write01"><%=productVO.getRegDate() %></td>
 	</tr>
 	<tr>
-		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
+		<td height="1" colspan="3" bgcolor="D6D6D6">
+		<input type="hidden" name="tranCode" value="1" /></td>
 	</tr>
 </table>
 

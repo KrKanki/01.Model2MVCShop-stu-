@@ -146,6 +146,7 @@ function resetData(){
 	</tr>
 	<tr>
 		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
+			<input type="hidden" name="tranCode" value="0" />
 	</tr>
 </table>
 
@@ -159,6 +160,7 @@ function resetData(){
 					<img src="/images/ct_btnbg01.gif" width="17" height="23"/>
 				</td>
 				<td background="/images/ct_btnbg02.gif" class="ct_btn01"  style="padding-top: 3px;">
+				
 					<a href="javascript:fncAddProduct();">µî·Ï</a>
 				</td>
 				<td width="14" height="23">

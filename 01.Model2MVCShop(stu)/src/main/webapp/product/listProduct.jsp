@@ -1,3 +1,4 @@
+<%@page import="com.model2.mvc.service.purchase.vo.PurchaseVO"%>
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="EUC-KR"%>
     
@@ -10,7 +11,7 @@
  <% 
  HashMap<String, Object> map = (HashMap<String,Object>)request.getAttribute("map");
  SearchVO searchVO = (SearchVO)request.getAttribute("searchVO");
-  
+ PurchaseVO purchaseVO = (PurchaseVO)request.getAttribute("purchaseVO");
  
  int total = 0;
  ArrayList<ProductVO> list = null;
@@ -183,6 +184,11 @@ function fncGetProductList(){
 		<td class="ct_list_b">등록일</td>	
 		<td class="ct_line02"></td>
 		<td class="ct_list_b">현재상태</td>	
+		<% if(purchaseVO.getTranCode().equals("0")){
+			
+		}
+		
+		%>
 	</tr>
 	<tr>
 		<td colspan="11" bgcolor="808285" height="1"></td>
@@ -205,7 +211,7 @@ function fncGetProductList(){
 		<td></td>
 		<td align="left">
 		
-			배송중<%-- =productVO.getProTranCode() --%>
+				구매완료<%-- =productVO.getProTranCode() --%>
 		
 		</td>	
 	</tr>
@@ -218,7 +224,7 @@ function fncGetProductList(){
 <table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-top:10px;">
 	<tr>
 		<td align="center">
-		<% 
+		<%-- 
 			int set=0; //  총 몇세트
 			int ps = 5;// 한번에 나올 페이지수
 			int a =0 ; // 나머지페이지
@@ -242,10 +248,15 @@ function fncGetProductList(){
 								set++;			
 							 }
 						 }
-					 for( i = 1+(set*b); i<=ps*set+b*a; i++){%>	
+					 for( i = 1+(set*b); i<=ps*set+b*a; i++){--%>	
+				<%for (int i = 1; i<= totalpage; i++){ 	 
+				 
+					%>
+					 
 					<a href = "/listProduct.do?page=<%=i%>&<%=url1%>"><%=i%></a>	 
-				<% 	 }
-				 }
+					
+					<% 	 
+				}	 
 		%>
 		 	
 	
