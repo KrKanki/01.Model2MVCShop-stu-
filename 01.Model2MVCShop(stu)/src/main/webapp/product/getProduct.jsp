@@ -1,4 +1,5 @@
- <%@ page language="java" contentType="text/html; charset=EUC-KR"
+ <%@page import="org.apache.tomcat.util.http.Cookies"%>
+<%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="EUC-KR"%>
  
 <%@ page import="com.model2.mvc.service.product.vo.*" %>
@@ -6,7 +7,7 @@
 <%
 	System.out.println("getProduct.jsp 실행");
 	ProductVO productVO = (ProductVO)request.getAttribute("productVO");
-	
+	Cookie[] cookies = request.getCookies();
 %>	
 
 	
@@ -121,23 +122,28 @@
 
 <table width="100%" border="0" cellnspacing="0" cellpadding="0"	style="margin-top: 10px;">
 	<tr>
+	
 		<td width="53%"></td>
+
 		<td align="right">
 
 		<table border="0" cellspacing="0" cellpadding="0">
 			<tr>
-		
+				<% if (session.getAttribute("user") != null ) { %>
 				<td width="17" height="23">
 					<img src="/images/ct_btnbg01.gif" width="17" height="23"/>
 				</td>
+				
 				<td background="/images/ct_btnbg02.gif" class="ct_btn01" style="padding-top: 3px;">
+				
 					<a href="/addPurchaseView.do?prodNo=<%=productVO.getProdNo()%>">구매</a>
+		
 				</td>
 				<td width="14" height="23">
 					<img src="/images/ct_btnbg03.gif" width="14" height="23">
 				</td>
 				<td width="30"></td>
-		
+				<%} %>
 				<td width="17" height="23">
 					<img src="/images/ct_btnbg01.gif" width="17" height="23"/>
 				</td>

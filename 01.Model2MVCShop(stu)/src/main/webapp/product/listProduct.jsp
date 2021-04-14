@@ -2,7 +2,7 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="EUC-KR"%>
     
-<%@page import = "java.util.ArrayList"%>  
+<%@page import = "java.util.List"%>  
 <%@page import = "java.util.HashMap" %>
 <%@page import = "com.model2.mvc.common.SearchVO" %>
 <%@page import = "com.model2.mvc.service.product.vo.ProductVO"%> 
@@ -14,12 +14,12 @@
  
  
  int total = 0;
- ArrayList<ProductVO> list = null;
- ArrayList<PurchaseVO> purList = null;
+ List<ProductVO> list = null;
+ List<PurchaseVO> purList = null;
  if(map != null){
 	 total = ((Integer)map.get("count")).intValue();
-	 list = (ArrayList<ProductVO>)map.get("list");
-	 purList = (ArrayList<PurchaseVO>)map.get("purList");
+	 list = (List<ProductVO>)map.get("list");
+	 purList = (List<PurchaseVO>)map.get("purList");
 	
 	 
  	}
@@ -199,7 +199,7 @@ function fncGetProductList(){
 			for(int i= 0; i< list.size(); i++){
 				ProductVO productVO = (ProductVO)list.get(i);
 				PurchaseVO purchaseVO = (PurchaseVO)purList.get(i);
-				System.out.println("asd : >>>>>>>>>>>>>>>"+purchaseVO.getPurchaseProd().getProTranCode());
+				
 				System.out.println("def : >>>>>>>>>>>>>>>"+purchaseVO.getTranCode());
 		%>
 	<tr class="ct_list_pop">
@@ -221,11 +221,14 @@ function fncGetProductList(){
 				
 					<%}else if(purchaseVO.getTranCode() =="1" ){ 	System.out.println(purchaseVO.getTranCode());%>
 				재고 없음
-		<% }else {	System.out.println("purchaseVO getTranCode 비교"+purchaseVO.getTranCode().equals("1"));
+		<% }else {	System.out.println("purchaseVO getTranCode 비교"+"1".equals(purchaseVO.getTranCode()));
 					System.out.println(purchaseVO.getTranCode());
 		%>
 				판매 중
-	<%} %><%-- =productVO.getProTranCode() --%>
+	<%}					
+			//String test=	purchaseVO.getTranCode().toString();
+				//System.out.println(test.equals("1"));
+				%><%-- =productVO.getProTranCode() --%>
 		
 		</td>	
 	</tr>

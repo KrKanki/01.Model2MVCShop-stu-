@@ -20,6 +20,7 @@
 			Cookie cookie = cookies[i];
 			if (cookie.getName().equals("history")) {
 				history = cookie.getValue();
+				System.out.println(cookie.getValue());
 			}
 		}
 		if (history != null) {

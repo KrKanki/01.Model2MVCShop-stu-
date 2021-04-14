@@ -1,7 +1,10 @@
 package com.model2.mvc.view.product;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.apache.tomcat.util.http.Cookies;
 
 import com.model2.mvc.framework.Action;
 import com.model2.mvc.service.product.ProductService;
@@ -24,8 +27,12 @@ public class GetProductAction extends Action {
 		
 		request.setAttribute("productVO", productVO);
 		System.out.println(prodNo);
-	
+		
+		Cookie cookie = new Cookie("history", Integer.toString(prodNo));
+		cookie.setMaxAge(60*60);		
+		response.addCookie(cookie);
 		if(menu.equals("manage")) {
+			
 			return "forward:/product/updateProductView.jsp";
 		}else {
 				

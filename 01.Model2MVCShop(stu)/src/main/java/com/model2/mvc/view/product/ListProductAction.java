@@ -81,7 +81,7 @@ public class ListProductAction extends Action {
 //		System.out.println(searchVO+"impl생성 바로아래1");
 		ProductService service = new ProductServiceImpl();
 //		System.out.println(searchVO+"impl생성 바로아래");
-		HashMap<String, Object> map =  service.getProductList(searchVO);
+		HashMap<String, Object> map =  (HashMap<String, Object>) service.getProductList(searchVO);
 //		System.out.println(searchVO+"해쉬맵 서비스 바로아래");
 		
 		PurchaseVO purchaseVO = new PurchaseVO();
@@ -105,5 +105,8 @@ public class ListProductAction extends Action {
 		
 		return "forward:/product/listProduct.jsp";
 	}
+  
+
+	
 		
 }

@@ -3,8 +3,10 @@ package com.model2.mvc.service.product.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.List;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -38,7 +40,7 @@ public class ProductDAO {
 		con.close();	
 	}
 	
-	public HashMap<String,Object> getProductList(SearchVO searchVO) throws Exception {
+	public Map<String,Object> getProductList(SearchVO searchVO) throws Exception {
 		
 		
 		Connection con = DBUtil.getConnection();
@@ -79,15 +81,15 @@ public class ProductDAO {
 		int total = rs.getRow();
 		System.out.println("로우의 수:" + total);
 		
-		HashMap<String,Object> map = new HashMap<String,Object>();
+		Map<String,Object> map = new HashMap(); 
 		map.put("count", new Integer(total));
 		
 		rs.absolute(searchVO.getPage() * searchVO.getPageUnit() - searchVO.getPageUnit()+1);
 		System.out.println("searchVO.getPage():" + searchVO.getPage());
 		System.out.println("searchVO.getPageUnit():" + searchVO.getPageUnit());	 
 		System.out.println("2번디버깅");
-		ArrayList<ProductVO> list = new ArrayList<ProductVO>();
-		ArrayList<PurchaseVO> purList = new ArrayList<PurchaseVO>();
+		List<ProductVO> list = new ArrayList<ProductVO>();
+		List<PurchaseVO> purList = new ArrayList<PurchaseVO>();
 		if (total > 0) {
 			for (int i = 0; i < searchVO.getPageUnit(); i++) {
 				ProductVO productVO = new ProductVO();
@@ -106,6 +108,7 @@ public class ProductDAO {
 				purList.add(purchaseVO);
 				System.out.println(purList+"test");
 				System.out.println("trancode 체크"+purchaseVO.getTranCode());
+				
 				if (!rs.next())
 					break;
 			}
