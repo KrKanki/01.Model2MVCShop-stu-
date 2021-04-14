@@ -11,13 +11,15 @@
  <% 
  HashMap<String, Object> map = (HashMap<String,Object>)request.getAttribute("map");
  SearchVO searchVO = (SearchVO)request.getAttribute("searchVO");
- PurchaseVO purchaseVO = (PurchaseVO)request.getAttribute("purchaseVO");
+ 
  
  int total = 0;
  ArrayList<ProductVO> list = null;
+ ArrayList<PurchaseVO> purList = null;
  if(map != null){
 	 total = ((Integer)map.get("count")).intValue();
 	 list = (ArrayList<ProductVO>)map.get("list");
+	 purList = (ArrayList<PurchaseVO>)map.get("purList");
 	
 	 
  	}
@@ -184,11 +186,10 @@ function fncGetProductList(){
 		<td class="ct_list_b">등록일</td>	
 		<td class="ct_line02"></td>
 		<td class="ct_list_b">현재상태</td>	
-		<% if(purchaseVO.getTranCode().equals("0")){
-			
-		}
+		 
 		
-		%>
+		
+		
 	</tr>
 	<tr>
 		<td colspan="11" bgcolor="808285" height="1"></td>
@@ -197,7 +198,10 @@ function fncGetProductList(){
 			int no = list.size();
 			for(int i= 0; i< list.size(); i++){
 				ProductVO productVO = (ProductVO)list.get(i);
-		%>		
+				PurchaseVO purchaseVO = (PurchaseVO)purList.get(i);
+				System.out.println("asd : >>>>>>>>>>>>>>>"+purchaseVO.getPurchaseProd().getProTranCode());
+				System.out.println("def : >>>>>>>>>>>>>>>"+purchaseVO.getTranCode());
+		%>
 	<tr class="ct_list_pop">
 		<td align="center"><%=no-- %></td>
 		<td></td>
@@ -211,7 +215,17 @@ function fncGetProductList(){
 		<td></td>
 		<td align="left">
 		
-				구매완료<%-- =productVO.getProTranCode() --%>
+				<%	
+				if(purchaseVO.getTranCode() == null){  	System.out.println(purchaseVO.getTranCode());%>
+					판매 중
+				
+					<%}else if(purchaseVO.getTranCode() =="1" ){ 	System.out.println(purchaseVO.getTranCode());%>
+				재고 없음
+		<% }else {	System.out.println("purchaseVO getTranCode 비교"+purchaseVO.getTranCode().equals("1"));
+					System.out.println(purchaseVO.getTranCode());
+		%>
+				판매 중
+	<%} %><%-- =productVO.getProTranCode() --%>
 		
 		</td>	
 	</tr>

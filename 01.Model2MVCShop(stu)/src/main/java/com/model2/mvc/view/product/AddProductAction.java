@@ -25,7 +25,7 @@ public class AddProductAction extends Action {
 		System.out.println(request.getParameter("prodName"));
 		System.out.println(request.getParameter("prodDetail"));
 		
-		purchaseVO.setTranCode("transCode");
+		purchaseVO.setTranCode("tranCode");
 		productVO.setProdName(request.getParameter("prodName"));
 		productVO.setProdDetail(request.getParameter("prodDetail"));
 	 	productVO.setManuDate((request.getParameter("manuDate")).replaceAll("-", "")); 

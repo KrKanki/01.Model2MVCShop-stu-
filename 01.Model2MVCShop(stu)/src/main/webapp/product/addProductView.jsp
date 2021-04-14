@@ -146,7 +146,7 @@ function resetData(){
 	</tr>
 	<tr>
 		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
-			<input type="hidden" name="tranCode" value="0" />
+	
 	</tr>
 </table>
 

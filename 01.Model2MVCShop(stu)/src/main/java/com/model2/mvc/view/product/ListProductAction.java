@@ -12,6 +12,7 @@ import com.model2.mvc.common.SearchVO;
 import com.model2.mvc.framework.Action;
 import com.model2.mvc.service.product.ProductService;
 import com.model2.mvc.service.product.impl.ProductServiceImpl;
+import com.model2.mvc.service.purchase.vo.PurchaseVO;
 
 public class ListProductAction extends Action {
 
@@ -83,11 +84,18 @@ public class ListProductAction extends Action {
 		HashMap<String, Object> map =  service.getProductList(searchVO);
 //		System.out.println(searchVO+"해쉬맵 서비스 바로아래");
 		
+		PurchaseVO purchaseVO = new PurchaseVO();
+	
+		
+	
+		
+		
 		request.setAttribute("map", map);
 		request.setAttribute("searchVO", searchVO);			
 		session.setAttribute("searchVO", searchVO);
 	
 		System.out.println(searchVO);
+		System.out.println(map);
 		System.out.println("listProductAction 끝");
 	
 		
