@@ -1,54 +1,26 @@
-<%@page import="com.model2.mvc.service.product.vo.ProductVO"%>
-<%@page import="com.model2.mvc.service.purchase.vo.PurchaseVO"%>
+<%@page import="com.model2.mvc.common.util.CommonUtil"%>
+<%@page import="com.model2.mvc.service.domain.User"%>
+<%@page import="com.model2.mvc.common.Page"%>
+<%@page import = "com.model2.mvc.service.domain.Product"%> 
+<%@page import="com.model2.mvc.service.domain.Purchase"%>
+<%@page import="com.model2.mvc.common.Search"%>
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="EUC-KR"%>
     
 <%@page import = "java.util.List"%>  
 <%@page import = "java.util.HashMap" %>
-<%@page import = "com.model2.mvc.common.SearchVO" %>
 
 
 
  <% 
- HashMap<String, Object> map = (HashMap<String,Object>)request.getAttribute("map");
- SearchVO searchVO = (SearchVO)request.getAttribute("searchVO");
+ 	List<Product> list = (List<Product>)request.getAttribute("list");
+ 	List<Purchase> purList = (List<Purchase>)request.getAttribute("purList");
+ 	Search search = (Search)request.getAttribute("search");
+ 	List menu = (List)request.getAttribute("menu");
+ 	String searchCondition = CommonUtil.null2str(search.getSearchCondition());
+	String searchKeyword = CommonUtil.null2str(search.getSearchKeyword());
+	Page resultPage=(Page)request.getAttribute("resultPage");
  
- 
- int total = 0;
- List<ProductVO> list = null;
- List<PurchaseVO> purList = null;
- if(map != null){
-	 total = ((Integer)map.get("count")).intValue();
-	 list = (List<ProductVO>)map.get("list");
-	 purList = (List<PurchaseVO>)map.get("purList");
-	
-	 
- 	}
-	 int currentPage = searchVO.getPage();
-	 
-	 int totalpage=0;
-	 if(total> 0){
-		 totalpage= total / searchVO.getPageUnit();
-		 if(total%searchVO.getPageUnit() >0)
-			 totalpage +=1;
-	 }
-	 String title = null;
-
-	 String url1 = null;
-	 String url2 = null;
-	 String url3 = null;
-	 
-	if( request.getParameter("menu").equals("manage")) {
-			 title = "상품 관리";
-		 	 url1 = "menu=manage";
-		 	 url2 = searchVO.getSearchCondition();
- 			 url3 = searchVO.getSearchKeyword();
-		}else{
-			 title = "상품 목록조회";
-			 url1 = "menu=search";
-			 url2 = searchVO.getSearchCondition();
- 			 url3 = searchVO.getSearchKeyword();
-		}
  %>
  
  
@@ -66,6 +38,7 @@
 <script type="text/javascript">
 
 function fncGetProductList(){
+	document.getElementById("currentPage").value = currentPage;
 	document.detailForm.submit();
 }
 
@@ -88,7 +61,7 @@ function fncGetProductList(){
 				<tr>
 					<td width="93%" class="ct_ttl01">
 					
-							<%=title %>
+							
 					
 					</td>
 				</tr>
@@ -104,7 +77,7 @@ function fncGetProductList(){
 <table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-top:10px;">
 	<tr>
 	<%
-		if(searchVO.getSearchCondition() != null){
+		if(search.getSearchCondition() != null){
 	%>
 	
 		
@@ -112,19 +85,19 @@ function fncGetProductList(){
 			<select name="searchCondition" class="ct_input_g" style="width:80px">
 				
 				<%
-				if(searchVO.getSearchCondition().equals("0")){
+				if(searchCondition.equals("0")){
 				%>
 				<option value ="0" selected>상품번호</option>
 				<option value ="1">상품명</option>
 				<option value ="2">상품가격</option>
 				<%
-				}else if(searchVO.getSearchCondition().equals("1")){
+				}else if(searchCondition.equals("1")){
 					%>
 				<option value ="0" >상품번호</option>
 				<option value ="1" selected>상품명</option>
 				<option value ="2">상품가격</option>
 				<%
-				}else if(searchVO.getSearchCondition().equals("2")){
+				}else if(searchCondition.equals("2")){
 					%>
 				<option value ="0" >상품번호</option>
 				<option value ="1" >상품명</option>
@@ -134,7 +107,7 @@ function fncGetProductList(){
 				%>
 				
 			</select>
-			<input type="text" name="searchKeyword" value="<%= searchVO.getSearchKeyword() %>" 
+			<input type="text" name="searchKeyword" value="<%= searchKeyword %>" 
 					class="ct_input_g" style="width:200px; height:19px" />
 		</td>
 	 <%
@@ -175,7 +148,7 @@ function fncGetProductList(){
 
 <table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-top:10px;">
 	<tr>
-		<td colspan="11" >전체 <%=total %>  건수, 현재 <%=currentPage %> 페이지</td>
+		<td colspan="11" >전체 <%=resultPage.getTotalCount() %>  건수, 현재 <%= resultPage.getCurrentPage() %> 페이지</td>
 	</tr>
 	<tr>
 		<td class="ct_list_b" width="100">No</td>
@@ -198,38 +171,38 @@ function fncGetProductList(){
 		<%
 			int no = list.size();
 			for(int i= 0; i< list.size(); i++){
-				ProductVO productVO = (ProductVO)list.get(i);
-				PurchaseVO purchaseVO = (PurchaseVO)purList.get(i);
+			Product product = (Product)list.get(i);
+			Purchase purchase = purList.get(i);
 				
-				System.out.println("def : >>>>>>>>>>>>>>>"+purchaseVO.getTranCode());
+				System.out.println("def : >>>>>>>>>>>>>>>"+purList.toString());
 		%>
 	<tr class="ct_list_pop">
 		<td align="center"><%=no-- %></td>
 		<td></td>
 				
-				<td align="left"><a href="getProduct.do?prodNo=<%=productVO.getProdNo()%>&<%=url1%>"><%=productVO.getProdName() %></a></td>
+				<td align="left"><a href="getProduct.do?prodNo=<%=product.getProdNo()%>>"><%=product.getProdName() %></a></td>
 		
 		<td></td>
-		<td align="left"><%=productVO.getPrice() %></td>
+		<td align="left"><%=product.getPrice() %></td>
 		<td></td>
-		<td align="left"><%=productVO.getRegDate() %></td>
+		<td align="left"><%=product.getRegDate() %></td>
 		<td></td>
 		<td align="left">
 		
 				<%	
-				if(purchaseVO.getTranCode() == null){  	System.out.println(purchaseVO.getTranCode());%>
+				if(purchase.getTranCode() == null){  	System.out.println(purchase.getTranCode());%>
 					판매 중
 				
-					<%}else if(purchaseVO.getTranCode() =="1" ){ 	System.out.println(purchaseVO.getTranCode());%>
+					<%}else if(purchase.getTranCode() =="1" ){ 	System.out.println(purchase.getTranCode());%>
 				재고 없음
-		<% }else {	System.out.println("purchaseVO getTranCode 비교"+"1".equals(purchaseVO.getTranCode()));
-					System.out.println(purchaseVO.getTranCode());
+		<% }else {	System.out.println("purchase getTranCode 비교"+"1".equals(purchase.getTranCode()));
+					System.out.println(purchase.getTranCode());
 		%>
 				판매 중
 	<%}					
-			//String test=	purchaseVO.getTranCode().toString();
+			//String test=	purchase.getTranCode().toString();
 				//System.out.println(test.equals("1"));
-				%><%-- =productVO.getProTranCode() --%>
+				%><%-- =product.getProTranCode() --%>
 		
 		</td>	
 	</tr>
@@ -242,40 +215,22 @@ function fncGetProductList(){
 <table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-top:10px;">
 	<tr>
 		<td align="center">
-		<%-- 
-			int set=0; //  총 몇세트
-			int ps = 5;// 한번에 나올 페이지수
-			int a =0 ; // 나머지페이지
-			int b = 0; //  몇번돌것인지
-			int c = 0;
-			int i = 0;	
-				 if(totalpage> 0){
-					set = totalpage / ps;
-					 if(totalpage%ps  >0){
-					a =	totalpage%ps ;
-						set++;			
-					 }
-				 }
-				 
-				 for(b = 0; b< set  ; b++){	
-					
-					 if(currentPage> 0){
-							c = currentPage / ps;
-							 if(currentPage%ps  >0){
-							a =	currentPage%ps ;
-								set++;			
-							 }
-						 }
-					 for( i = 1+(set*b); i<=ps*set+b*a; i++){--%>	
-				<%for (int i = 1; i<= totalpage; i++){ 	 
-				 
-					%>
-					 
-					<a href = "/listProduct.do?page=<%=i%>&<%=url1%>"><%=i%></a>	 
-					
-					<% 	 
-				}	 
-		%>
+		 <input type="hidden" id="currentPage" name="currentPage" value=""/>
+			<% if( resultPage.getCurrentPage() <= resultPage.getPageUnit() ){ %>
+					◀ 이전
+			<% }else{ %>
+					<a href="javascript:fncGetUserList('<%=resultPage.getCurrentPage()-1%>')">◀ 이전</a>
+			<% } %>
+
+			<%	for(int i=resultPage.getBeginUnitPage();i<= resultPage.getEndUnitPage() ;i++){	%>
+					<a href="javascript:fncGetUserList('<%=i %>');"><%=i %></a>
+			<% 	}  %>
+	
+			<% if( resultPage.getEndUnitPage() >= resultPage.getMaxPage() ){ %>
+					이후 ▶
+			<% }else{ %>
+					<a href="javascript:fncGetUserList('<%=resultPage.getEndUnitPage()+1%>')">이후 ▶</a>
+			<% } %>
 		 	
 	
     	</td>

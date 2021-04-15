@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import com.model2.mvc.common.Search;
 import com.model2.mvc.common.SearchVO;
 import com.model2.mvc.common.util.DBUtil;
 import com.model2.mvc.service.user.vo.UserVO;
@@ -142,4 +143,15 @@ public class UserDAO {
 		
 		con.close();
 	}
+	
+	private String makeCurrentPageSql(String sql , Search search){
+		sql = 	"SELECT * "+ 
+					"FROM (		SELECT inner_table. * ,  ROWNUM AS row_seq " +
+									" 	FROM (	"+sql+" ) inner_table "+
+									"	WHERE ROWNUM <="+search.getCurrentPage()*search.getPageSize()+" ) " +
+					"WHERE row_seq BETWEEN "+((search.getCurrentPage()-1)*search.getPageSize()+1) +" AND "+search.getCurrentPage()*search.getPageSize();
+		
+		System.out.println("UserDAO :: make SQL :: "+ sql);	
+		
+		return sql;
 }

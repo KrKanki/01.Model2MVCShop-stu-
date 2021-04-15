@@ -168,7 +168,7 @@ public class UserDao {
 		
 		pStmt.close();
 		con.close();
-		rs.close();
+		rs.close();	
 		
 		return totalCount;
 	}
@@ -176,9 +176,10 @@ public class UserDao {
 	// 게시판 currentPage Row 만  return 
 	private String makeCurrentPageSql(String sql , Search search){
 		sql = 	"SELECT * "+ 
-					"FROM (		SELECT inner_table. * ,  ROWNUM AS row_seq " +
-									" 	FROM (	"+sql+" ) inner_table "+
-									"	WHERE ROWNUM <="+search.getCurrentPage()*search.getPageSize()+" ) " +
+					"FROM (		SELECT inner_table. * ,  "
+								+ "ROWNUM AS row_seq " +
+								" 	FROM (	"+sql+" ) inner_table "+
+								"	WHERE ROWNUM <="+search.getCurrentPage()*search.getPageSize()+" ) " +
 					"WHERE row_seq BETWEEN "+((search.getCurrentPage()-1)*search.getPageSize()+1) +" AND "+search.getCurrentPage()*search.getPageSize();
 		
 		System.out.println("UserDAO :: make SQL :: "+ sql);	
