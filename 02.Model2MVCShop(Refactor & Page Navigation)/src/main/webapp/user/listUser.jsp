@@ -64,8 +64,8 @@
 				<option value="0" <%= (searchCondition.equals("0") ? "selected" : "")%>>회원ID</option>
 				<option value="1" <%= (searchCondition.equals("1") ? "selected" : "")%>>회원명</option>
 			</select>
-			<input 	type="text" name="searchKeyword" value="<%= searchKeyword %>"  class="ct_input_g" 
-							style="width:200px; height:20px" >
+			<input 	type="text" name="searchKeyword" value="<%= searchKeyword %>"  
+			class="ct_input_g" 	style="width:200px; height:20px" >
 		</td>
 		<td align="right" width="70">
 			<table border="0" cellspacing="0" cellpadding="0">

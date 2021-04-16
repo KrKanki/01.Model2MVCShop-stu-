@@ -2,6 +2,7 @@ package com.model2.mvc.view.product;
 
 
 import java.awt.List;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.print.attribute.HashPrintRequestAttributeSet;
@@ -80,9 +81,9 @@ public class ListProductAction extends Action {
 		HashMap<String, Object> map =  (HashMap<String, Object>) service.getProductList(search);
 		
 		Page resultPage	= 
-				new Page( currentPage, ((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
+				new Page( currentPage, ((Integer)map.get("totalCount")).intValue()  , pageUnit, pageSize);
 	
-		Purchase purchase = new Purchase();
+		//Purchase purchase = new Purchase();
 	
 
 		 String title = null;
@@ -91,7 +92,7 @@ public class ListProductAction extends Action {
 		 String url2 = null;
 		 String url3 = null;
 		 
-		 List menu = new List();
+		ArrayList<String> menu = new ArrayList<String>();
 		 
 		if( request.getParameter("menu").equals("manage")) {
 				 title = "惑前 包府";
@@ -110,12 +111,13 @@ public class ListProductAction extends Action {
 		menu.add(url2);
 		menu.add(url3);
 		
-		
+		System.out.println("ListProductAction ::"+resultPage);
 		request.setAttribute("menu", menu);
+		System.out.println(menu);
 		request.setAttribute("list", map.get("list"));
-		request.setAttribute("purlist", map.get("purlist"));
+//		request.setAttribute("purlist", map.get("purlist"));
 		request.setAttribute("search", search);			
-	
+		request.setAttribute("resultPage", resultPage);
 		System.out.println(search);
 		System.out.println(map);
 		System.out.println("listProductAction 场");

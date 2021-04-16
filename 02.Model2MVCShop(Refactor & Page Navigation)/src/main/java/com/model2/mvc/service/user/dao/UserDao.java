@@ -123,7 +123,7 @@ public class UserDao {
 		map.put("totalCount", new Integer(totalCount));
 		//==> currentPage 의 게시물 정보 갖는 List 저장
 		map.put("list", list);
-
+		System.out.println("list.size() : "+ list.size());
 		rs.close();
 		pStmt.close();
 		con.close();
@@ -182,7 +182,11 @@ public class UserDao {
 								"	WHERE ROWNUM <="+search.getCurrentPage()*search.getPageSize()+" ) " +
 					"WHERE row_seq BETWEEN "+((search.getCurrentPage()-1)*search.getPageSize()+1) +" AND "+search.getCurrentPage()*search.getPageSize();
 		
-		System.out.println("UserDAO :: make SQL :: "+ sql);	
+		System.out.println(search.getCurrentPage()*search.getPageSize());
+		System.out.println(search.getPageSize());
+		System.out.println(search.getCurrentPage());
+		
+		System.out.println(" :: make SQL :: "+ sql);	
 		
 		return sql;
 	}

@@ -1,3 +1,4 @@
+<%@page import="java.util.ArrayList"%>
 <%@page import="com.model2.mvc.common.util.CommonUtil"%>
 <%@page import="com.model2.mvc.service.domain.User"%>
 <%@page import="com.model2.mvc.common.Page"%>
@@ -16,7 +17,7 @@
  	List<Product> list = (List<Product>)request.getAttribute("list");
  	List<Purchase> purList = (List<Purchase>)request.getAttribute("purList");
  	Search search = (Search)request.getAttribute("search");
- 	List menu = (List)request.getAttribute("menu");
+ 	List<String> menu = (List<String>)request.getAttribute("menu");
  	String searchCondition = CommonUtil.null2str(search.getSearchCondition());
 	String searchKeyword = CommonUtil.null2str(search.getSearchKeyword());
 	Page resultPage=(Page)request.getAttribute("resultPage");
@@ -37,7 +38,7 @@
 
 <script type="text/javascript">
 
-function fncGetProductList(){
+function fncGetProductList(currentPage){
 	document.getElementById("currentPage").value = currentPage;
 	document.detailForm.submit();
 }
@@ -49,7 +50,7 @@ function fncGetProductList(){
 
 <div style="width:98%; margin-left:10px;">
 
-<form name="detailForm" action="/listProduct.do?menu=manage" method="post">
+<form name="detailForm" action="/listProduct.do?<%=menu.get(1)%>" method="post">
 
 <table width="100%" height="37" border="0" cellpadding="0"	cellspacing="0">
 	<tr>
@@ -61,7 +62,7 @@ function fncGetProductList(){
 				<tr>
 					<td width="93%" class="ct_ttl01">
 					
-							
+							<%=menu.get(0)%>
 					
 					</td>
 				</tr>
@@ -76,54 +77,17 @@ function fncGetProductList(){
 
 <table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-top:10px;">
 	<tr>
-	<%
-		if(search.getSearchCondition() != null){
-	%>
-	
-		
-		<td align="right">
+			<td align="right">
 			<select name="searchCondition" class="ct_input_g" style="width:80px">
 				
-				<%
-				if(searchCondition.equals("0")){
-				%>
-				<option value ="0" selected>상품번호</option>
-				<option value ="1">상품명</option>
-				<option value ="2">상품가격</option>
-				<%
-				}else if(searchCondition.equals("1")){
-					%>
-				<option value ="0" >상품번호</option>
-				<option value ="1" selected>상품명</option>
-				<option value ="2">상품가격</option>
-				<%
-				}else if(searchCondition.equals("2")){
-					%>
-				<option value ="0" >상품번호</option>
-				<option value ="1" >상품명</option>
-				<option value ="2" selected>상품가격</option>				
-				<%
-				}
-				%>
+				<option value="0" <%= (searchCondition.equals("0") ? "selected" : "")%>>상품번호</option>
+				<option value="1" <%= (searchCondition.equals("1") ? "selected" : "")%>>상품명</option>
+				<option value="2" <%= (searchCondition.equals("2") ? "selected" : "")%>>상품가격</option>
 				
 			</select>
 			<input type="text" name="searchKeyword" value="<%= searchKeyword %>" 
 					class="ct_input_g" style="width:200px; height:19px" />
 		</td>
-	 <%
-	 }else{
-	 %>
-		 <td align="right">
-			<select name="searchCondition" class="ct_input_g" style="width:80px">
-				<option value="0" selected>상품번호</option>
-				<option value="1">상품명</option>
-				<option value="2">상품가격</option>
-			</select>
-			<input type="text" name="searchKeyword"  class="ct_input_g" style="width:200px; height:19px" >
-		</td>
-	<%
-	 }
-	%>
 		 
 		<td align="right" width="70">
 			<table border="0" cellspacing="0" cellpadding="0">
@@ -132,7 +96,7 @@ function fncGetProductList(){
 						<img src="/images/ct_btnbg01.gif" width="17" height="23">
 					</td>
 					<td background="/images/ct_btnbg02.gif" class="ct_btn01" style="padding-top:3px;">
-						<a href="javascript:fncGetProductList();">검색</a>
+						<a href="javascript:fncGetProductList('1');">검색</a>
 					</td>
 					<td width="14" height="23">
 						<img src="/images/ct_btnbg03.gif" width="14" height="23">
@@ -169,18 +133,14 @@ function fncGetProductList(){
 		<td colspan="11" bgcolor="808285" height="1"></td>
 	</tr>
 		<%
-			int no = list.size();
 			for(int i= 0; i< list.size(); i++){
-			Product product = (Product)list.get(i);
-			Purchase purchase = purList.get(i);
-				
-				System.out.println("def : >>>>>>>>>>>>>>>"+purList.toString());
-		%>
+			Product product = (Product)list.get(i);%>
+		
 	<tr class="ct_list_pop">
-		<td align="center"><%=no-- %></td>
+		<td align="center"><%=i+1 %></td>
 		<td></td>
 				
-				<td align="left"><a href="getProduct.do?prodNo=<%=product.getProdNo()%>>"><%=product.getProdName() %></a></td>
+				<td align="left"><a href="getProduct.do?prodNo=<%=product.getProdNo()%>&<%=menu.get(1)%>"><%=product.getProdName() %></a></td>
 		
 		<td></td>
 		<td align="left"><%=product.getPrice() %></td>
@@ -188,18 +148,10 @@ function fncGetProductList(){
 		<td align="left"><%=product.getRegDate() %></td>
 		<td></td>
 		<td align="left">
-		
+		test중
 				<%	
-				if(purchase.getTranCode() == null){  	System.out.println(purchase.getTranCode());%>
-					판매 중
 				
-					<%}else if(purchase.getTranCode() =="1" ){ 	System.out.println(purchase.getTranCode());%>
-				재고 없음
-		<% }else {	System.out.println("purchase getTranCode 비교"+"1".equals(purchase.getTranCode()));
-					System.out.println(purchase.getTranCode());
-		%>
-				판매 중
-	<%}					
+				
 			//String test=	purchase.getTranCode().toString();
 				//System.out.println(test.equals("1"));
 				%><%-- =product.getProTranCode() --%>
@@ -219,17 +171,17 @@ function fncGetProductList(){
 			<% if( resultPage.getCurrentPage() <= resultPage.getPageUnit() ){ %>
 					◀ 이전
 			<% }else{ %>
-					<a href="javascript:fncGetUserList('<%=resultPage.getCurrentPage()-1%>')">◀ 이전</a>
+					<a href="javascript:fncGetProductList('<%=resultPage.getCurrentPage()-1%>')">◀ 이전</a>
 			<% } %>
 
 			<%	for(int i=resultPage.getBeginUnitPage();i<= resultPage.getEndUnitPage() ;i++){	%>
-					<a href="javascript:fncGetUserList('<%=i %>');"><%=i %></a>
+					<a href="javascript:fncGetProductList('<%=i %>');"><%=i %></a>
 			<% 	}  %>
 	
 			<% if( resultPage.getEndUnitPage() >= resultPage.getMaxPage() ){ %>
 					이후 ▶
 			<% }else{ %>
-					<a href="javascript:fncGetUserList('<%=resultPage.getEndUnitPage()+1%>')">이후 ▶</a>
+					<a href="javascript:fncGetProductList('<%=resultPage.getEndUnitPage()+1%>')">이후 ▶</a>
 			<% } %>
 		 	
 	

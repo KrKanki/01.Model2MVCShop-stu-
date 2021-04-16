@@ -21,7 +21,9 @@ public class GetProductAction extends Action {
 		
 		
 		int prodNo=Integer.parseInt(request.getParameter("prodNo"));
+		
 		String menu = request.getParameter("menu");
+		
 		ProductService service=new ProductServiceImpl();
 		Product product=service.getProduct(prodNo);
 		
@@ -29,7 +31,7 @@ public class GetProductAction extends Action {
 		System.out.println(prodNo);
 		
 		Cookie cookie = new Cookie("history", Integer.toString(prodNo));
-		cookie.setMaxAge(60*60);		
+			
 		response.addCookie(cookie);
 		if(menu.equals("manage")) {
 			
