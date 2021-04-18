@@ -2,9 +2,17 @@ package com.model2.mvc.service.purchase.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
+import com.model2.mvc.common.SearchVO;
 import com.model2.mvc.common.util.DBUtil;
+import com.model2.mvc.service.product.vo.ProductVO;
 import com.model2.mvc.service.purchase.vo.PurchaseVO;
+import com.model2.mvc.service.user.vo.UserVO;
 
 public class PurchaseDAO {
 	
@@ -35,6 +43,39 @@ public class PurchaseDAO {
 		con.close();
 				
 		
+	}
+	
+	public HashMap<String,Object> getPurchaseList(PurchaseVO purchaseVO) throws Exception {
+		
+		Connection con = DBUtil.getConnection();
+		System.out.println("getPurchaseList ½ÇÇà");
+		
+		String sql = "Select * from transaction WHERE user_id IN (?)";
+		
+		PreparedStatement stmt = con.prepareStatement(sql);
+		stmt.setString(1, purchaseVO.getBuyer().getUserId());
+				
+		ResultSet rs = stmt.executeQuery();
+		int total = rs.getRow();
+		List<PurchaseVO> list = new ArrayList<PurchaseVO>();
+		
+		Map<String,Object> map = new HashMap(); 
+		map.put("count", new Integer(total));
+		
+		while(rs.next()) {
+			
+			PurchaseVO purchsaeVO = new PurchaseVO();
+			purchaseVO.setBuyer(null);
+			purchaseVO.setTranNo(total);
+			purchaseVO.setPurchaseProd(null);
+			purchaseVO.setTranCode(sql);
+			purchaseVO.set
+			
+			
+			
+		}
+		
+		return map;
 	}
 	
 
