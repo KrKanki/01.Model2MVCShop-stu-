@@ -1,6 +1,6 @@
 <%@page import="com.model2.mvc.service.purchase.vo.PurchaseVO"%>
 <%@page import="com.model2.mvc.service.user.vo.UserVO"%>
-<%@page import="com.model2.mvc.service.domain.ProductVO"%>
+
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="EUC-KR"%>
 
@@ -32,13 +32,13 @@
 다음과 같이 구매가 되었습니다.
 
 <table border=1>
-	<tr>
+	<tr>s
 		<td>물품번호</td>
 		<td><%= purchaseVO.getPurchaseProd().getProdNo() %></td>
 		<td></td>
 	</tr>
 	<tr>
-		<td>구매자아이디</td>
+		<td>구매자아이디</td>s
 		<td><%=purchaseVO.getBuyer().getUserId() %></td>
 		<td></td>
 	</tr>

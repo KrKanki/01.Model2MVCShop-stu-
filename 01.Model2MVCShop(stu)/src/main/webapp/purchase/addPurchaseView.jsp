@@ -1,6 +1,7 @@
+<%@page import="com.model2.mvc.service.product.vo.ProductVO"%>
 <%@page import="com.model2.mvc.service.purchase.vo.PurchaseVO"%>
 <%@page import="com.model2.mvc.service.user.vo.UserVO"%>
-<%@page import="com.model2.mvc.service.domain.ProductVO"%>
+
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="EUC-KR"%>
 
