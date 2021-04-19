@@ -51,6 +51,9 @@ CREATE TABLE transaction (
 	PRIMARY KEY(tran_no)
 );
 
+ALTER TABLE transaction
+rename constraints 
+
 
 INSERT 
 INTO users ( user_id, user_name, password, role, ssn, cell_phone, addr, email, reg_date ) 

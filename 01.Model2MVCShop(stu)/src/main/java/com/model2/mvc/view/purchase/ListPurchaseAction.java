@@ -28,8 +28,10 @@ public class ListPurchaseAction extends Action {
 		System.out.println("listPurchaseaction 실행");
 		
 		HttpSession session = request.getSession();
-		
-		UserVO userVO = (UserVO)session.getAttribute("user");
+	
+		UserVO userVO =  (UserVO)session.getAttribute("user");
+		userVO.setUserId(userVO.getUserId());
+		System.out.println(userVO.getUserId() +" userId값");
 				
 		int page= 1;
 		SearchVO searchVO = new SearchVO();
@@ -63,14 +65,14 @@ public class ListPurchaseAction extends Action {
 	
 		System.out.println(searchVO);
 		System.out.println(map);
-		System.out.println("listProductAction 끝");
+		System.out.println("listPurchase 끝");
 	
 		
 	
 		
 		
 		
-		return "forward:/product/listProduct.jsp";
+		return "forward:/purchase/listPurchase.jsp";
 	}
   
 

@@ -27,7 +27,7 @@ public class PurchaseDAO {
 		Connection con = DBUtil.getConnection();
 		System.out.println("insertPurchase 실행");
 		String sql = "INSERT INTO transaction "
-				+ "(tran_no, prod_no, buyer_id, payment_option, receiver_name, receiver_phone, dlvy_addr, dlvy_request, dlvy_date, order_data, tran_status_code) "
+				+ "(tran_no, prod_no, buyer_id, payment_option, receiver_name, receiver_phone, demailaddr, dlvy_request, dlvy_date, order_data, tran_status_code) "
 				+ "VALUES(seq_product_prod_no.nextval, ?, ?, ?, ?, ?, ?, ?, ?, sysdate, ?)";
 		
 		PreparedStatement stmt = con.prepareStatement(sql);
@@ -52,16 +52,16 @@ public class PurchaseDAO {
 		Connection con = DBUtil.getConnection();
 		System.out.println("getPurchaseList 실행");
 		
-		String sql = "Select * from transaction WHERE user_id IN (?)";
-		sql += " ORDER BY pd.prod_no(+) ";
+		String sql = "Select * from transaction WHERE BUYER_ID IN ( '"+buyerId+"' )";
+		sql += " ORDER BY prod_no ";
 		PreparedStatement stmt = 
-				con.prepareStatement(	sql,
-															ResultSet.TYPE_SCROLL_INSENSITIVE,
-															ResultSet.CONCUR_UPDATABLE);
-		stmt.setString(1, buyerId);
-				
+				con.prepareStatement(	sql);
+		//stmt.setString(1, buyerId);
+		System.out.println(sql);		
 		ResultSet rs = stmt.executeQuery();
 		int total = rs.getRow();
+		System.out.println(buyerId);
+		System.out.println(rs.getRow() +"row의 값");
 		
 		
 		List<PurchaseVO> list = new ArrayList<PurchaseVO>();
