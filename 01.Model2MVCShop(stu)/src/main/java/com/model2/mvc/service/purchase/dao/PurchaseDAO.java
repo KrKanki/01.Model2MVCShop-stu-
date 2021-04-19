@@ -8,6 +8,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.catalina.User;
+
 import com.model2.mvc.common.SearchVO;
 import com.model2.mvc.common.util.DBUtil;
 import com.model2.mvc.service.product.vo.ProductVO;
@@ -45,38 +47,45 @@ public class PurchaseDAO {
 		
 	}
 	
-	public HashMap<String,Object> getPurchaseList(PurchaseVO purchaseVO) throws Exception {
+	public Map<String,Object> getPurchaseList(SearchVO searchVO, String buyerId ) throws Exception {
 		
 		Connection con = DBUtil.getConnection();
 		System.out.println("getPurchaseList ½ÇÇà");
 		
 		String sql = "Select * from transaction WHERE user_id IN (?)";
-		
-		PreparedStatement stmt = con.prepareStatement(sql);
-		stmt.setString(1, purchaseVO.getBuyer().getUserId());
+		sql += " ORDER BY pd.prod_no(+) ";
+		PreparedStatement stmt = 
+				con.prepareStatement(	sql,
+															ResultSet.TYPE_SCROLL_INSENSITIVE,
+															ResultSet.CONCUR_UPDATABLE);
+		stmt.setString(1, buyerId);
 				
 		ResultSet rs = stmt.executeQuery();
 		int total = rs.getRow();
+		
+		
 		List<PurchaseVO> list = new ArrayList<PurchaseVO>();
-		
+		UserVO userVO = new UserVO();
+		ProductVO productVO = new ProductVO();
 		Map<String,Object> map = new HashMap(); 
-		map.put("count", new Integer(total));
+		rs.absolute(searchVO.getPage() * searchVO.getPageUnit() - searchVO.getPageUnit()+1);
 		
-		while(rs.next()) {
+		if (total > 0) {
+			for (int i = 0; i < searchVO.getPageUnit(); i++) {
 			
-			PurchaseVO purchsaeVO = new PurchaseVO();
-			purchaseVO.setBuyer(null);
-			purchaseVO.setTranNo(total);
-			purchaseVO.setPurchaseProd(null);
-			purchaseVO.setTranCode(sql);
-			purchaseVO.set
-			
-			
-			
+			PurchaseVO purchaseVO = new PurchaseVO();
+			purchaseVO.setBuyer(userVO);
+			purchaseVO.setReceiverName(purchaseVO.getReceiverName());
+			purchaseVO.setReceiverPhone(purchaseVO.getReceiverPhone());
+			purchaseVO.setTranCode(purchaseVO.getTranCode());
+			purchaseVO.setPurchaseProd(productVO);
+			list.add(purchaseVO);
 		}
 		
+		
+	}
+		map.put("count", new Integer(total));
+		map.put("list", list);
 		return map;
 	}
-	
-
 }

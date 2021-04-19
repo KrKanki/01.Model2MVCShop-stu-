@@ -7,7 +7,6 @@
 
 
 
-
 <html>
 <head>
 <title>구매 목록조회</title>
@@ -43,7 +42,7 @@
 
 <table width="100%" border="0" cellspacing="0" cellpadding="0"	style="margin-top: 10px;">
 	<tr>
-		<td colspan="11">전체 2 건수, 현재 1 페이지</td>
+		<td colspan="11">전체 <%= %> 건수, 현재 1 페이지</td>
 	</tr>
 	<tr>
 		<td class="ct_list_b" width="100">No</td>

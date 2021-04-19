@@ -1,7 +1,40 @@
+<%@page import="java.util.Map"%>
+<%@page import="java.util.List"%>
+<%@page import="com.model2.mvc.service.purchase.vo.PurchaseVO"%>
+<%@page import="com.model2.mvc.common.SearchVO"%>
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="EUC-KR"%>
 
 
+
+<%
+	SearchVO searchVO = new SearchVO();
+	PurchaseVO purchaseVO = new PurchaseVO();
+	
+	List<PurchaseVO> list = null;
+	Map<String, Object>	map = (Map<String, Object>)request.getAttribute("map");
+	
+	int total = 0;
+	
+	
+	if( map != null){
+		
+		total = ((Integer)map.get("count")).intValue();
+		list = (List<PurchaseVO>)map.get("list");	
+	}
+	
+	int currentPage = searchVO.getPage();
+	
+	int totalPage = 0;
+	
+	if(total> 0 ){
+		totalPage = total / searchVO.getPageUnit();
+		if(total%searchVO.getPageUnit()>0){
+			totalPage++;
+		}
+	}
+	
+%>
 
 
 
@@ -43,7 +76,7 @@
 
 <table width="100%" border="0" cellspacing="0" cellpadding="0"	style="margin-top: 10px;">
 	<tr>
-		<td colspan="11">전체 2 건수, 현재 1 페이지</td>
+		<td colspan="11">전체 <%=total %> 건수, 현재 <%=currentPage %> 페이지</td>
 	</tr>
 	<tr>
 		<td class="ct_list_b" width="100">No</td>
@@ -61,26 +94,32 @@
 	<tr>
 		<td colspan="11" bgcolor="808285" height="1"></td>
 	</tr>
-
+<%
+	int no = list.size();
+	for(int i = 0; i<list.size() ; i++){
+		
+	 purchaseVO = (PurchaseVO)list.get(i);
+		
 	
+	%>
 	
 	<tr class="ct_list_pop">
 		<td align="center">
-			<a href="/getPurchase.do?tranNo=10036">2</a>
+			<a href="/getPurchase.do?tranNo=10036"><%=i %></a>
 		</td>
 		<td></td>
 		<td align="left">
-			<a href="/getUser.do?userId=user06">user06</a>
+			<a href="/getUser.do?userId=user06"><%=purchaseVO.getBuyer().getUserId() %></a>
 		</td>
 		<td></td>
-		<td align="left">SCOTT</td>
+		<td align="left"><%= purchaseVO.getReceiverName() %></td>
 		<td></td>
-		<td align="left">1234</td>
+		<td align="left"><%= purchaseVO.getReceiverPhone() %></td>
 		<td></td>
-		<td align="left">현재
+		<td align="left">
+		<% (purchaseVO.getTranCode().trim.equals("2") ? "구매완료상태입니다" : "배송중입니다" ); %>
 				
-					구매완료
-				상태 입니다.</td>
+					</td>
 		<td></td>
 		<td align="left">
 			
@@ -89,7 +128,7 @@
 	<tr>
 		<td colspan="11" bgcolor="D6D7D6" height="1"></td>
 	</tr>
-	
+	<% } %>
 	
 	<tr class="ct_list_pop">
 		<td align="center">
