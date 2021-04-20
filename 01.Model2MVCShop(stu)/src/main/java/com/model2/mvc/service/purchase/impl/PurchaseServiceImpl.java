@@ -27,7 +27,7 @@ public class PurchaseServiceImpl implements PurchaseService {
 	@Override
 	public PurchaseVO getPurchase(int tranNo) throws Exception {
 		// TODO Auto-generated method stub
-		return null;
+		return purchaseDAO.getPurchase(tranNo);
 	}
 
 	@Override
@@ -40,8 +40,8 @@ public class PurchaseServiceImpl implements PurchaseService {
 	@Override
 	public HashMap<String, Object> getPurchaseList(SearchVO searchVO, String buyerId) throws Exception {
 
-		purchaseDAO.getPurchaseList(searchVO, buyerId);
-		return null;
+		
+		return purchaseDAO.getPurchaseList(searchVO, buyerId);
 	}
 
 	@Override

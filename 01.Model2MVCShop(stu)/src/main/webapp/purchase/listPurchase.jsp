@@ -8,7 +8,7 @@
 
 
 <%
-	SearchVO searchVO = new SearchVO();
+	SearchVO searchVO = (SearchVO)request.getAttribute("searchVO");
 	PurchaseVO purchaseVO = new PurchaseVO();
 	
 	List<PurchaseVO> list = null;
@@ -21,6 +21,7 @@
 		
 		total = ((Integer)map.get("count")).intValue();
 		list = (List<PurchaseVO>)map.get("list");	
+		System.out.println(list+" listpurchse.jsp listÀÇ °ª");
 	}
 	
 	int currentPage = searchVO.getPage();
@@ -105,7 +106,7 @@
 	
 	<tr class="ct_list_pop">
 		<td align="center">
-			<a href="/getPurchase.do?tranNo=10036"><%=i %></a>
+			<a href="/getPurchase.do?tranNo=<%=purchaseVO.getPurchaseProd().getProdNo() %>"><%=i+1 %></a>
 		</td>
 		<td></td>
 		<td align="left">

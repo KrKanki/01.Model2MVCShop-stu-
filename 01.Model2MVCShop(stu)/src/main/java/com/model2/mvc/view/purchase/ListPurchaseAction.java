@@ -37,45 +37,25 @@ public class ListPurchaseAction extends Action {
 		SearchVO searchVO = new SearchVO();
 		searchVO.setPage(page);
 		
+
+		String pageUnit = getServletContext().getInitParameter("pageSize");
+		searchVO.setPageUnit(Integer.parseInt(pageUnit));
+		System.out.println(searchVO+"페이지유닛생성 바로위1");
+		
 		PurchaseService service = new PurchaseServiceImpl();
 		Map<String, Object> map = (Map<String, Object>)service.getPurchaseList(searchVO, userVO.getUserId());
 		
 		
-				
-		
-		
-			
-			
-		
-		System.out.println(searchVO+"페이지유닛생성 바로위1");
-
-		String pageUnit = getServletContext().getInitParameter("pageSize");
-		searchVO.setPageUnit(Integer.parseInt(pageUnit));
-//		
-		
-		PurchaseVO purchaseVO = new PurchaseVO();
-	
-		
-	
-		
-		
+		System.out.println("map의 값"+map);
+		System.out.println( " : searcgVO의 값 " + searchVO);
 		request.setAttribute("map", map);
 		request.setAttribute("searchVO", searchVO);			
 		session.setAttribute("searchVO", searchVO);
 	
-		System.out.println(searchVO);
-		System.out.println(map);
 		System.out.println("listPurchase 끝");
 	
-		
-	
-		
-		
-		
+
 		return "forward:/purchase/listPurchase.jsp";
 	}
   
-
-	
-		
 }

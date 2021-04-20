@@ -1,8 +1,10 @@
 package com.model2.mvc.service.purchase.dao;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -47,7 +49,7 @@ public class PurchaseDAO {
 		
 	}
 	
-	public Map<String,Object> getPurchaseList(SearchVO searchVO, String buyerId ) throws Exception {
+	public HashMap<String,Object> getPurchaseList(SearchVO searchVO, String buyerId ) throws Exception {
 		
 		Connection con = DBUtil.getConnection();
 		System.out.println("getPurchaseList 실행");
@@ -65,31 +67,92 @@ public class PurchaseDAO {
 		int total = rs.getRow();
 		System.out.println(buyerId);
 		System.out.println(rs.getRow() +"row의 값");
-		
+		SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd");
 		
 		List<PurchaseVO> list = new ArrayList<PurchaseVO>();
 		UserVO userVO = new UserVO();
 		ProductVO productVO = new ProductVO();
-		Map<String,Object> map = new HashMap(); 
+		HashMap<String,Object> map = new HashMap(); 
 		rs.absolute(searchVO.getPage() * searchVO.getPageUnit() - searchVO.getPageUnit()+1);
+		
+		System.out.println(searchVO.getPageUnit() + " : searchVO pageUnit의 값" );
+		userVO.setUserId(buyerId);
+		
 		
 		if (total > 0) {
 			for (int i = 0; i < searchVO.getPageUnit(); i++) {
 			
 			PurchaseVO purchaseVO = new PurchaseVO();
 			purchaseVO.setBuyer(userVO);
-			purchaseVO.setReceiverName(purchaseVO.getReceiverName());
-			purchaseVO.setReceiverPhone(purchaseVO.getReceiverPhone());
-			purchaseVO.setTranCode(purchaseVO.getTranCode());
+			purchaseVO.setReceiverName(rs.getString("receiver_name"));
+			purchaseVO.setReceiverPhone(rs.getString("receiver_phone"));
+			purchaseVO.setTranCode(rs.getString("tran_status_code"));
+			productVO.setProdNo(rs.getInt("prod_no"));
 			purchaseVO.setPurchaseProd(productVO);
+			purchaseVO.setPaymentOption(rs.getString("payment_option"));
+			purchaseVO.setDivyAddr(rs.getString("demailaddr"));
+			purchaseVO.setDivyRequest(rs.getString("dlvy_request"));
+			purchaseVO.setDivyDate(rs.getString("dlvy_date"));
+			purchaseVO.setOrderDate(rs.getDate("order_data"));
+			
+			
+			
+			
+			
 			list.add(purchaseVO);
+			System.out.println(list.toString());
+			if (!rs.next())
+				break;
+			}
+			
+			
+		
+		}
+		
+		map.put("count", new Integer(total));
+		map.put("list", list);
+		
+		
+		
+		System.out.println( " : list size 의 값 "+ list.size() );
+		return map;
+	}
+	
+	public PurchaseVO getPurchase(int tranNo) throws Exception {
+		
+		Connection con = DBUtil.getConnection();
+		System.out.println("getPurchase 실행");
+		PurchaseVO purchaseVO = new PurchaseVO();
+		UserVO userVO = new UserVO();
+		ProductVO productVO = new ProductVO();
+		
+		String sql = "Select * from transaction WHERE prod_no IN ( ? )";
+		
+		PreparedStatement stmt = con.prepareStatement(sql);
+		stmt.setInt(1, tranNo);
+		ResultSet rs = stmt.executeQuery();
+		
+		while(rs.next()){
+			productVO.setProdNo(rs.getInt("prod_No"));
+			purchaseVO.setPurchaseProd(productVO);
+			userVO.setUserId(rs.getString("buyer_id"));
+			purchaseVO.setBuyer(userVO);
+				
+			purchaseVO.setPaymentOption(rs.getString("payment_option"));
+			purchaseVO.setReceiverName(rs.getString("receiver_name"));
+			purchaseVO.setReceiverPhone(rs.getString("receiver_phone"));
+			purchaseVO.setDivyRequest(rs.getString("dlvy_request"));
+			purchaseVO.setDivyDate(rs.getString("dlvy_date"));
+			purchaseVO.setOrderDate(rs.getDate("order_data"));
+		
 		}
 		
 		
+		
+		System.out.println("purchaseVO 체크 : "+purchaseVO);
+		
+		return purchaseVO;
 	}
-		map.put("count", new Integer(total));
-		map.put("list", list);
-		System.out.println(list.size() + " : list size 의 값");
-		return map;
-	}
+	
+	
 }
