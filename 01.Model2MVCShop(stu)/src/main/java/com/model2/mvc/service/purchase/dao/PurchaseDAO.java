@@ -55,10 +55,13 @@ public class PurchaseDAO {
 		String sql = "Select * from transaction WHERE BUYER_ID IN ( '"+buyerId+"' )";
 		sql += " ORDER BY prod_no ";
 		PreparedStatement stmt = 
-				con.prepareStatement(	sql);
+				con.prepareStatement(	sql,
+															ResultSet.TYPE_SCROLL_INSENSITIVE,
+															ResultSet.CONCUR_UPDATABLE);
 		//stmt.setString(1, buyerId);
 		System.out.println(sql);		
 		ResultSet rs = stmt.executeQuery();
+		rs.last();
 		int total = rs.getRow();
 		System.out.println(buyerId);
 		System.out.println(rs.getRow() +"row의 값");
@@ -86,6 +89,7 @@ public class PurchaseDAO {
 	}
 		map.put("count", new Integer(total));
 		map.put("list", list);
+		System.out.println(list.size() + " : list size 의 값");
 		return map;
 	}
 }
