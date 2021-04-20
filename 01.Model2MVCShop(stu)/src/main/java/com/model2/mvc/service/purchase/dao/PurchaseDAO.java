@@ -155,4 +155,32 @@ public class PurchaseDAO {
 	}
 	
 	
+	public void updatePurcahse(PurchaseVO purchaseVO) throws Exception {
+		
+		Connection con = DBUtil.getConnection();
+		System.out.println("updatePurchase ½ÇÇà");
+		
+		
+		
+		String sql = "UPDATE transaction set payment_option=?, receiver_name=?, "
+				+ " receiver_phone=?, demailaddr=?, dlvy_request=?, dlvy_date=? "
+				+ " WHERE prod_no IN ('?')"; 
+		
+		PreparedStatement stmt = con.prepareStatement(sql);
+		stmt.setString(1, purchaseVO.getPaymentOption());
+		stmt.setString(2, purchaseVO.getReceiverName());
+		stmt.setString(3, purchaseVO.getReceiverPhone());
+		stmt.setString(4, purchaseVO.getDivyAddr());
+		stmt.setString(5, purchaseVO.getDivyRequest());
+		stmt.setDate(6, purchaseVO.getDivyDate().replaceAll("-", ""));
+		stmt.setInt(7, purchaseVO.getPurchaseProd().getProdNo());
+		stmt.executeUpdate();
+		
+		con.close();
+		
+		
+		
+	}
+	
+	
 }
