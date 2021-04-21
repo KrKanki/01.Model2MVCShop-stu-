@@ -223,12 +223,12 @@ function fncGetProductList(){
 					<%}else if(purchaseVO.getTranCode().trim() =="1" ){ 	System.out.println(purchaseVO.getTranCode());%>
 				구매 완료
 		<% }else {%>
-				배송중
+				배송중ㅁㄴㅇㅁㄴ
 	<%}					
 			//String test=	purchaseVO.getTranCode().toString();
 				//System.out.println(test.equals("1"));
 				%><%-- =productVO.getProTranCode() --%>
-		
+		1
 		</td>	
 	</tr>
 	<tr>
