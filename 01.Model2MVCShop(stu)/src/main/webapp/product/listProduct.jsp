@@ -217,15 +217,13 @@ function fncGetProductList(){
 		<td align="left">
 		
 				<%	
-				if(purchaseVO.getTranCode() == null){  	System.out.println(purchaseVO.getTranCode());%>
+				if(purchaseVO.getTranCode().trim() == null){  	System.out.println(purchaseVO.getTranCode());%>
 					판매 중
 				
-					<%}else if(purchaseVO.getTranCode() =="1" ){ 	System.out.println(purchaseVO.getTranCode());%>
-				재고 없음
-		<% }else {	System.out.println("purchaseVO getTranCode 비교"+"1".equals(purchaseVO.getTranCode()));
-					System.out.println(purchaseVO.getTranCode());
-		%>
-				판매 중
+					<%}else if(purchaseVO.getTranCode().trim() =="1" ){ 	System.out.println(purchaseVO.getTranCode());%>
+				구매 완료
+		<% }else {%>
+				배송중
 	<%}					
 			//String test=	purchaseVO.getTranCode().toString();
 				//System.out.println(test.equals("1"));

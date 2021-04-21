@@ -24,6 +24,7 @@
 		System.out.println(list+" listpurchse.jsp listÀÇ °ª");
 	}
 	
+	
 	int currentPage = searchVO.getPage();
 	
 	int totalPage = 0;

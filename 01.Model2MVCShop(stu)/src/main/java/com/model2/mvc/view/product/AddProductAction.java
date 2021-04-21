@@ -38,6 +38,7 @@ public class AddProductAction extends Action {
 		ProductService service= new ProductServiceImpl();
 		service.addProduct(productVO);
 		session.setAttribute("productVO", productVO);
+		System.out.println("productVO üũ "+productVO);
 		
 		return "redirect:/product/addProduct.jsp";
 	}

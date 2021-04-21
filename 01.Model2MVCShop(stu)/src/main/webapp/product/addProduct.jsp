@@ -1,11 +1,13 @@
+<%@page import="com.model2.mvc.service.product.vo.ProductVO"%>
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="EUC-KR"%>
-<%@ page import = "com.model2.mvc.service.product.vo.*" %>
+
 
 <!DOCTYPE html>
 <%
-	ProductVO productVO = (ProductVO)request.getAttribute("productVO");
+	ProductVO productVO = (ProductVO)session.getAttribute("productVO");
 	System.out.println("addProductAction 실행");
+	System.out.println("productVO 체크"+productVO);
 %>
 <html>
 <head>
@@ -48,7 +50,7 @@
 		<td class="ct_write01">
 			<table width="100%" border="0" cellspacing="0" cellpadding="0">
 				<tr>
-					<td width="105"><%=productVO.getProdName()%></td>
+					<td width="105"><%=productVO.getProdName() %></td>
 					<td></td>
 				</tr>
 			</table>

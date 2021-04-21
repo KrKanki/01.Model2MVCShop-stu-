@@ -67,7 +67,7 @@ public class PurchaseDAO {
 		int total = rs.getRow();
 		System.out.println(buyerId);
 		System.out.println(rs.getRow() +"row의 값");
-		SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd");
+		
 		
 		List<PurchaseVO> list = new ArrayList<PurchaseVO>();
 		UserVO userVO = new UserVO();
@@ -140,8 +140,9 @@ public class PurchaseDAO {
 				
 			purchaseVO.setPaymentOption(rs.getString("payment_option"));
 			purchaseVO.setReceiverName(rs.getString("receiver_name"));
-			purchaseVO.setReceiverPhone(rs.getString("receiver_phone"));
+			purchaseVO.setReceiverPhone(rs.getString("receiver_phone"));	
 			purchaseVO.setDivyRequest(rs.getString("dlvy_request"));
+			purchaseVO.setDivyAddr(rs.getString("DEMAILADDR"));
 			purchaseVO.setDivyDate(rs.getString("dlvy_date"));
 			purchaseVO.setOrderDate(rs.getDate("order_data"));
 		
@@ -159,23 +160,24 @@ public class PurchaseDAO {
 		
 		Connection con = DBUtil.getConnection();
 		System.out.println("updatePurchase 실행");
-		
+
 		
 		
 		String sql = "UPDATE transaction set payment_option=?, receiver_name=?, "
 				+ " receiver_phone=?, demailaddr=?, dlvy_request=?, dlvy_date=? "
-				+ " WHERE prod_no IN ('?')"; 
+				+ " WHERE prod_no IN (?)"; 
 		
+		System.out.println("update purcahse purchaseVO===== "+purchaseVO);
 		PreparedStatement stmt = con.prepareStatement(sql);
 		stmt.setString(1, purchaseVO.getPaymentOption());
 		stmt.setString(2, purchaseVO.getReceiverName());
 		stmt.setString(3, purchaseVO.getReceiverPhone());
 		stmt.setString(4, purchaseVO.getDivyAddr());
 		stmt.setString(5, purchaseVO.getDivyRequest());
-		stmt.setDate(6, purchaseVO.getDivyDate().replaceAll("-", ""));
+		stmt.setString(6,  purchaseVO.getDivyDate());
 		stmt.setInt(7, purchaseVO.getPurchaseProd().getProdNo());
-		stmt.executeUpdate();
-		
+		  stmt.executeUpdate();
+		System.out.println(sql);
 		con.close();
 		
 		
