@@ -1,3 +1,4 @@
+<%@page import="com.model2.mvc.service.user.vo.UserVO"%>
 <%@page import="com.model2.mvc.service.product.vo.ProductVO"%>
 <%@page import="com.model2.mvc.service.purchase.vo.PurchaseVO"%>
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
@@ -12,8 +13,8 @@
  <% 
  HashMap<String, Object> map = (HashMap<String,Object>)request.getAttribute("map");
  SearchVO searchVO = (SearchVO)request.getAttribute("searchVO");
- 
- 
+ UserVO userVO = (UserVO)session.getAttribute("user");
+ System.out.println(userVO);
  int total = 0;
  List<ProductVO> list = null;
  List<PurchaseVO> purList = null;
@@ -37,12 +38,24 @@
 	 String url1 = null;
 	 String url2 = null;
 	 String url3 = null;
-	 
+	 String trans = null;
 	if( request.getParameter("menu").equals("manage")) {
 			 title = "상품 관리";
 		 	 url1 = "menu=manage";
 		 	 url2 = searchVO.getSearchCondition();
  			 url3 = searchVO.getSearchKeyword();
+ 			 
+ 			if(purchaseVO.getTranCode() == null){
+			판매 중
+		
+		}else if(	purchaseVO.getTranCode().trim().equals("1") ){  
+		구매 완료 <a href="/updateTranCodeByProd.do?tranNo= <%=purchaseVO.getPurchaseProd().getProdNo() %>&tranCode=2">배송 시작</a>
+		}else if(purchaseVO.getTranCode().trim().equals("2") ){
+		배송중 
+		}else if(purchaseVO.getTranCode().trim().equals("3") ){					
+			배송완료
+		 } 
+ 			 
 		}else{
 			 title = "상품 목록조회";
 			 url1 = "menu=search";
@@ -206,9 +219,11 @@ function fncGetProductList(){
 	<tr class="ct_list_pop">
 		<td align="center"><%=no-- %></td>
 		<td></td>
-				
-				<td align="left"><a href="getProduct.do?prodNo=<%=productVO.getProdNo()%>&<%=url1%>"><%=productVO.getProdName() %></a></td>
-		
+				<% if(purchaseVO.getTranCode() == null){ %>
+				<td align="left"><a href="getProduct.do?prodNo=<%=productVO.getProdNo()%>&<%=url1%>">		<%=productVO.getProdName() %></a></td>
+				<% }else{  %>
+				<td><%=productVO.getProdName() %></a></td>
+				<%} %>
 		<td></td>
 		<td align="left"><%=productVO.getPrice() %></td>
 		<td></td>
@@ -217,63 +232,31 @@ function fncGetProductList(){
 		<td align="left">
 		
 				<%	
-				if(purchaseVO.getTranCode().trim() == null){  	System.out.println(purchaseVO.getTranCode());%>
-					판매 중
+			
 				
-					<%}else if(purchaseVO.getTranCode().trim() =="1" ){ 	System.out.println(purchaseVO.getTranCode());%>
-				구매 완료
-		<% }else {%>
-				배송중ㅁㄴㅇㅁㄴ
-	<%}					
-			//String test=	purchaseVO.getTranCode().toString();
-				//System.out.println(test.equals("1"));
-				%><%-- =productVO.getProTranCode() --%>
-		1
+				
+		
 		</td>	
 	</tr>
 	<tr>
 		<td colspan="11" bgcolor="D6D7D6" height="1"></td>
 	</tr>	
-	<% } %>
+	<%} %>
 </table>
 
 <table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-top:10px;">
 	<tr>
 		<td align="center">
-		<%-- 
-			int set=0; //  총 몇세트
-			int ps = 5;// 한번에 나올 페이지수
-			int a =0 ; // 나머지페이지
-			int b = 0; //  몇번돌것인지
-			int c = 0;
-			int i = 0;	
-				 if(totalpage> 0){
-					set = totalpage / ps;
-					 if(totalpage%ps  >0){
-					a =	totalpage%ps ;
-						set++;			
-					 }
-				 }
-				 
-				 for(b = 0; b< set  ; b++){	
-					
-					 if(currentPage> 0){
-							c = currentPage / ps;
-							 if(currentPage%ps  >0){
-							a =	currentPage%ps ;
-								set++;			
-							 }
-						 }
-					 for( i = 1+(set*b); i<=ps*set+b*a; i++){--%>	
-				<%for (int i = 1; i<= totalpage; i++){ 	 
-				 
-					%>
-					 
+	
+				<%for (int i = 1; i<= totalpage; i++){ 	 	%>
+	 
 					<a href = "/listProduct.do?page=<%=i%>&<%=url1%>"><%=i%></a>	 
+			
+					<%}	 %>
 					
-					<% 	 
-				}	 
-		%>
+					
+				
+	
 		 	
 	
     	</td>

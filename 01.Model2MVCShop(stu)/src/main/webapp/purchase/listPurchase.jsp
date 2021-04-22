@@ -119,12 +119,25 @@
 		<td align="left"><%= purchaseVO.getReceiverPhone() %></td>
 		<td></td>
 		<td align="left">
-		<% String trans = purchaseVO.getTranCode().trim().equals("2") ? "구매완료상태입니다" : "배송중입니다" ; %>
-				<%=trans %>
+		
+		<% if(purchaseVO.getTranCode().trim().equals("1")){%>
+		구매 완료 상태입니다.
+		<%}else if(purchaseVO.getTranCode().trim().equals("2") ){%>
+		배송중 상태입니다.
+		<%}else if(purchaseVO.getTranCode().trim().equals("3") ){%>
+		배송완료 상태입니다.
+					
+		
+		<% }%>
 					</td>
 		<td></td>
 		<td align="left">
-			
+		<% if(purchaseVO.getTranCode().trim().equals("1")){%>
+		
+		<%}else if(purchaseVO.getTranCode().trim().equals("2") ){%>
+		<a href="/updateTranCode.do?tranNo=10038&tranCode=3"> 배송도착 확인완료</a>
+		<%}else if(purchaseVO.getTranCode().trim().equals("3") ){%>
+		
 		</td>
 	</tr>
 	<tr>
@@ -136,7 +149,7 @@
 	<tr>
 		<td colspan="11" bgcolor="D6D7D6" height="1"></td>
 	</tr>
-	
+	<%} %>
 </table>
 
 <table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-top: 10px;">

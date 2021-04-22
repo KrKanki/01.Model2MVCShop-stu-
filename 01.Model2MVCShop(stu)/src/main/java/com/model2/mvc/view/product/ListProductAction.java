@@ -13,6 +13,7 @@ import com.model2.mvc.framework.Action;
 import com.model2.mvc.service.product.ProductService;
 import com.model2.mvc.service.product.impl.ProductServiceImpl;
 import com.model2.mvc.service.purchase.vo.PurchaseVO;
+import com.model2.mvc.service.user.vo.UserVO;
 
 public class ListProductAction extends Action {
 
@@ -26,6 +27,10 @@ public class ListProductAction extends Action {
 		System.out.println("listproductaction 실행");
 		String menu = request.getParameter("menu");
 		request.setAttribute("menu", menu);
+		
+		UserVO userVO = (UserVO)session.getAttribute("user");
+				
+		
 		
 		System.out.println(request.getParameter("searchCondition"));
 		System.out.println(request.getParameter("searchKeyword"));
@@ -99,7 +104,7 @@ public class ListProductAction extends Action {
 		System.out.println("listProductAction 끝");
 	
 		
-	
+		System.out.println("userVO 값 확인"+userVO);
 		
 		
 		

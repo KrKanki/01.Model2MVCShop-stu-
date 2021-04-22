@@ -24,7 +24,7 @@ public class LoginAction extends Action{
 		
 		HttpSession session=request.getSession();
 		session.setAttribute("user", dbVO);
-		
+		System.out.println("userVO 저장된 정보 : "+dbVO);
 		return "redirect:/index.jsp";
 	}
 }

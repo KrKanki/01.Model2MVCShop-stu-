@@ -184,5 +184,20 @@ public class PurchaseDAO {
 		
 	}
 	
+	public void updateTranCode(PurchaseVO purchaseVO) throws Exception {
+		
+		Connection con = DBUtil.getConnection();
+		System.out.println("updateTranCode ½ÇÇà");
+		
+		String sql = "UPDATE transaction set tran_status_code = ? "
+				+ "	 WHERE prod_no IN (?) "; 
+		
+		PreparedStatement stmt = con.prepareStatement(sql);
+		stmt.setString(1, purchaseVO.getTranCode());
+		stmt.setInt(2, purchaseVO.getPurchaseProd().getProdNo());
+		
+		
+	}
+	
 	
 }
