@@ -83,6 +83,8 @@
 	<tr>
 		<td class="ct_list_b" width="100">No</td>
 		<td class="ct_line02"></td>
+		<td class="ct_list_b" width="150">상품명</td>
+		<td class="ct_line02"></td>
 		<td class="ct_list_b" width="150">회원ID</td>
 		<td class="ct_line02"></td>
 		<td class="ct_list_b" width="150">회원명</td>
@@ -92,6 +94,7 @@
 		<td class="ct_list_b">배송현황</td>
 		<td class="ct_line02"></td>
 		<td class="ct_list_b">정보수정</td>
+		
 	</tr>
 	<tr>
 		<td colspan="11" bgcolor="808285" height="1"></td>
@@ -106,17 +109,19 @@
 	%>
 	
 	<tr class="ct_list_pop">
-		<td align="center">
-			<a href="/getPurchase.do?tranNo=<%=purchaseVO.getPurchaseProd().getProdNo() %>"><%=i+1 %></a>
-		</td>
+		<td align="center">	<%=i+1 %></td>
 		<td></td>
-		<td align="left">
-			<a href="/getUser.do?userId=user06"><%=purchaseVO.getBuyer().getUserId() %></a>
-		</td>
+		
+		<td align="left"><a href="/getPurchase.do?tranNo=<%=purchaseVO.getPurchaseProd().getProdNo() %>"><%=purchaseVO.getPurchaseProd().getProdName() %></a></td>
+		<td></td>
+		
+		<td align="left"><a href="/getUser.do?userId=<%=purchaseVO.getBuyer().getUserId() %>"><%=purchaseVO.getBuyer().getUserId() %></a></td>
 		<td></td>
 		<td align="left"><%= purchaseVO.getReceiverName() %></td>
-		<td></td>
+		
+		<td></td>		
 		<td align="left"><%= purchaseVO.getReceiverPhone() %></td>
+		
 		<td></td>
 		<td align="left">
 		
@@ -132,23 +137,20 @@
 					</td>
 		<td></td>
 		<td align="left">
+		
 		<% if(purchaseVO.getTranCode().trim().equals("1")){%>
 		
 		<%}else if(purchaseVO.getTranCode().trim().equals("2") ){%>
-		<a href="/updateTranCode.do?tranNo=10038&tranCode=3"> 배송도착 확인완료</a>
+		<a href="/updateTranCode.do?tranNo=<%=purchaseVO.getPurchaseProd().getProdNo() %>&tranCode=3"> 배송도착 확인완료</a>
 		<%}else if(purchaseVO.getTranCode().trim().equals("3") ){%>
-		
+		구매확정
+		<% } %>
 		</td>
 	</tr>
 	<tr>
 		<td colspan="11" bgcolor="D6D7D6" height="1"></td>
 	</tr>
-	<% } %>
-	
-	
-	<tr>
-		<td colspan="11" bgcolor="D6D7D6" height="1"></td>
-	</tr>
+
 	<%} %>
 </table>
 
@@ -157,11 +159,11 @@
 		<td align="center">
 		 
 		 
-		 <% for(int i=0; i<= totalPage; i++){
+		 <% for(int i=1; i<= totalPage; i++){
 			 %>
 		
 		 
-			<a href="/listPurchase.do?page=i">i</a> 
+			<a href="/listPurchase.do?page=<%=i%>"><%=i %></a> 
 		<% } %>
 		</td>
 	</tr>

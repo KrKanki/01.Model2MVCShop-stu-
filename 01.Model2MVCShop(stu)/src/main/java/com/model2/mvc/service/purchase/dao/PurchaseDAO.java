@@ -54,7 +54,14 @@ public class PurchaseDAO {
 		Connection con = DBUtil.getConnection();
 		System.out.println("getPurchaseList 실행");
 		
-		String sql = "Select * from transaction WHERE BUYER_ID IN ( '"+buyerId+"' )";
+		String sql = "SELECT"
+				+ "		ta.prod_no, ta.buyer_id, ta.payment_option, ta.receiver_name, ta.receiver_phone,"
+				+ "		ta.demailaddr, ta.dlvy_request, ta.tran_status_code, ta.order_data, ta.dlvy_date, pd.prod_name"
+				+ "		FROM transaction ta, product pd"
+				+ "		WHERE ta.prod_no = pd.prod_no AND"
+				+ "		BUYER_ID IN ( '"+buyerId+"' )";
+			
+		
 		sql += " ORDER BY prod_no ";
 		PreparedStatement stmt = 
 				con.prepareStatement(	sql,
@@ -71,7 +78,7 @@ public class PurchaseDAO {
 		
 		List<PurchaseVO> list = new ArrayList<PurchaseVO>();
 		UserVO userVO = new UserVO();
-		ProductVO productVO = new ProductVO();
+		
 		HashMap<String,Object> map = new HashMap(); 
 		rs.absolute(searchVO.getPage() * searchVO.getPageUnit() - searchVO.getPageUnit()+1);
 		
@@ -81,40 +88,39 @@ public class PurchaseDAO {
 		
 		if (total > 0) {
 			for (int i = 0; i < searchVO.getPageUnit(); i++) {
-			
-			PurchaseVO purchaseVO = new PurchaseVO();
-			purchaseVO.setBuyer(userVO);
-			purchaseVO.setReceiverName(rs.getString("receiver_name"));
-			purchaseVO.setReceiverPhone(rs.getString("receiver_phone"));
-			purchaseVO.setTranCode(rs.getString("tran_status_code"));
-			productVO.setProdNo(rs.getInt("prod_no"));
-			purchaseVO.setPurchaseProd(productVO);
-			purchaseVO.setPaymentOption(rs.getString("payment_option"));
-			purchaseVO.setDivyAddr(rs.getString("demailaddr"));
-			purchaseVO.setDivyRequest(rs.getString("dlvy_request"));
-			purchaseVO.setDivyDate(rs.getString("dlvy_date"));
-			purchaseVO.setOrderDate(rs.getDate("order_data"));
-			
-			
-			
-			
-			
-			list.add(purchaseVO);
-			System.out.println(list.toString());
-			if (!rs.next())
-				break;
-			}
-			
-			
+				ProductVO productVO = new ProductVO();
+				PurchaseVO purchaseVO = new PurchaseVO();
+				purchaseVO.setBuyer(userVO);
+				purchaseVO.setReceiverName(rs.getString("receiver_name"));
+				purchaseVO.setReceiverPhone(rs.getString("receiver_phone"));
+				purchaseVO.setTranCode(rs.getString("tran_status_code"));
+				productVO.setProdNo(rs.getInt("prod_no"));
+				System.out.println("prodNo 번호체크"+productVO.getProdNo());
+				productVO.setProdName(rs.getString("prod_name"));
+				
+				purchaseVO.setPurchaseProd(productVO);
+				purchaseVO.setPaymentOption(rs.getString("payment_option"));
+				purchaseVO.setDivyAddr(rs.getString("demailaddr"));
+				purchaseVO.setDivyRequest(rs.getString("dlvy_request"));
+				purchaseVO.setDivyDate(rs.getString("dlvy_date"));
+				purchaseVO.setOrderDate(rs.getDate("order_data"));
 		
+				list.add(purchaseVO);
+				System.out.println("for문 내부의 list값"+list.toString());
+				if (!rs.next())
+					break;
+			}		
+			
 		}
 		
+		System.out.println("for문 외부의 list값"+list.toString());
 		map.put("count", new Integer(total));
 		map.put("list", list);
-		
-		
-		
+
 		System.out.println( " : list size 의 값 "+ list.size() );
+		
+		con.close();
+		
 		return map;
 	}
 	
@@ -196,7 +202,10 @@ public class PurchaseDAO {
 		stmt.setString(1, purchaseVO.getTranCode());
 		stmt.setInt(2, purchaseVO.getPurchaseProd().getProdNo());
 		
+		int rs = stmt.executeUpdate();
 		
+		System.out.println("rs 체크"+rs);
+		System.out.println("sql 체크\n" + sql);
 	}
 	
 	

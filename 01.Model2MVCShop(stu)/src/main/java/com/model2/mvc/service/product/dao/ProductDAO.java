@@ -103,7 +103,7 @@ public class ProductDAO {
 				productVO.setRegDate(rs.getDate("reg_date"));
 				purchaseVO.setPurchaseProd(productVO);
 				purchaseVO.setTranCode(rs.getString("tran_status_code"));
-				//vo.setProTranCode(rs.getString("proTranCode"));
+			
 				
 				System.out.println("3번 if문안디버깅");
 				System.out.println(rs.getString("tran_status_code"));

@@ -44,25 +44,13 @@
 		 	 url1 = "menu=manage";
 		 	 url2 = searchVO.getSearchCondition();
  			 url3 = searchVO.getSearchKeyword();
- 			 
- 			if(purchaseVO.getTranCode() == null){
-			판매 중
-		
-		}else if(	purchaseVO.getTranCode().trim().equals("1") ){  
-		구매 완료 <a href="/updateTranCodeByProd.do?tranNo= <%=purchaseVO.getPurchaseProd().getProdNo() %>&tranCode=2">배송 시작</a>
-		}else if(purchaseVO.getTranCode().trim().equals("2") ){
-		배송중 
-		}else if(purchaseVO.getTranCode().trim().equals("3") ){					
-			배송완료
-		 } 
- 			 
-		}else{
+ 		}else{
 			 title = "상품 목록조회";
 			 url1 = "menu=search";
 			 url2 = searchVO.getSearchCondition();
  			 url3 = searchVO.getSearchKeyword();
-		}
- %>
+		} %>
+
  
  
  
@@ -213,26 +201,50 @@ function fncGetProductList(){
 			for(int i= 0; i< list.size(); i++){
 				ProductVO productVO = (ProductVO)list.get(i);
 				PurchaseVO purchaseVO = (PurchaseVO)purList.get(i);
-				
-				System.out.println("def : >>>>>>>>>>>>>>>"+purchaseVO.getTranCode());
+		
 		%>
 	<tr class="ct_list_pop">
 		<td align="center"><%=no-- %></td>
 		<td></td>
 				<% if(purchaseVO.getTranCode() == null){ %>
-				<td align="left"><a href="getProduct.do?prodNo=<%=productVO.getProdNo()%>&<%=url1%>">		<%=productVO.getProdName() %></a></td>
+				<td align="left"><a href="getProduct.do?prodNo=<%=productVO.getProdNo()%>&<%=url1%>"><%=productVO.getProdName() %></a></td>
 				<% }else{  %>
-				<td><%=productVO.getProdName() %></a></td>
+				<td align="left"><%=productVO.getProdName() %></a></td>
 				<%} %>
+		
 		<td></td>
 		<td align="left"><%=productVO.getPrice() %></td>
+		
 		<td></td>
 		<td align="left"><%=productVO.getRegDate() %></td>
+		
 		<td></td>
 		<td align="left">
+				
+		<%if(request.getParameter("menu").equals("manage")){	
+				if(purchaseVO.getTranCode() == null){%>
+				판매 중
 		
-				<%	
+				<%}else if(	purchaseVO.getTranCode().trim().equals("1") ){%>  
+				구매 완료 <a href="/updateTranCode.do?tranNo=<%=productVO.getProdNo()%>&tranCode=2">배송 시작</a>
+				<%}else if(purchaseVO.getTranCode().trim().equals("2") ){%>
+				배송중 
+				<%}else if(purchaseVO.getTranCode().trim().equals("3") ){%>			
+				배송완료
+				<%} 
+		}else{
 			
+			if(purchaseVO.getTranCode() == null){%>
+		판매 중
+		
+		<%}else if(	purchaseVO.getTranCode().trim().equals("1") ){%>  
+		구매 완료 
+		<%}else if(purchaseVO.getTranCode().trim().equals("2") ){%>
+		배송중 
+		<%}else if(purchaseVO.getTranCode().trim().equals("3") ){%>			
+		배송완료		
+		<%}	}%>
+		
 				
 				
 		
@@ -252,7 +264,7 @@ function fncGetProductList(){
 	 
 					<a href = "/listProduct.do?page=<%=i%>&<%=url1%>"><%=i%></a>	 
 			
-					<%}	 %>
+					<%	}	 %>
 					
 					
 				

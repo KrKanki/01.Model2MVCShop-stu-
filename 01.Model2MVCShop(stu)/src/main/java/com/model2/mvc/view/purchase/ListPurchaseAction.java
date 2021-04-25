@@ -35,6 +35,10 @@ public class ListPurchaseAction extends Action {
 				
 		int page= 1;
 		SearchVO searchVO = new SearchVO();
+		
+		if(request.getParameter("page")!=null) { 
+			page=Integer.parseInt(request.getParameter("page"));
+		}
 		searchVO.setPage(page);
 		
 
