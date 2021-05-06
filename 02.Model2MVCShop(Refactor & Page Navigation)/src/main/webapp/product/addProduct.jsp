@@ -4,7 +4,7 @@
 
 <!DOCTYPE html>
 <%
-	Product product = (Product)request.getAttribute("product");
+	Product product = (Product)session.getAttribute("product");
 	System.out.println("addProductAction ½ÇÇà");
 %>
 <html>

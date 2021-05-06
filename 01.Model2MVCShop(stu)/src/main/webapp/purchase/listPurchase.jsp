@@ -112,7 +112,12 @@
 		<td align="center">	<%=i+1 %></td>
 		<td></td>
 		
-		<td align="left"><a href="/getPurchase.do?tranNo=<%=purchaseVO.getPurchaseProd().getProdNo() %>"><%=purchaseVO.getPurchaseProd().getProdName() %></a></td>
+		<td align="left">
+		<% if(purchaseVO.getTranCode().trim().equals("1")){%>
+		<a href="/getPurchase.do?tranNo=<%=purchaseVO.getPurchaseProd().getProdNo() %>">
+		<%} %>
+		<%=purchaseVO.getPurchaseProd().getProdName() %></a>
+		</td>
 		<td></td>
 		
 		<td align="left"><a href="/getUser.do?userId=<%=purchaseVO.getBuyer().getUserId() %>"><%=purchaseVO.getBuyer().getUserId() %></a></td>

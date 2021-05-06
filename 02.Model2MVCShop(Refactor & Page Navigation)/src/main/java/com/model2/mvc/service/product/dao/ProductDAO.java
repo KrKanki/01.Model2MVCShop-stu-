@@ -17,6 +17,7 @@ import com.model2.mvc.service.domain.Purchase;
 
 
 
+
 public class ProductDAO {
 
 	public ProductDAO() {
@@ -49,39 +50,32 @@ public class ProductDAO {
 		System.out.println(search);
 		Map<String,Object> map = new HashMap<String,Object>(); 
 		
-		String sql = "SELECT * FROM product pd "; //, transaction ta WHERE pd.prod_no = ta.prod_no(+)  " ;
-				
+		String sql = "SELECT "
+				+ " pd.prod_no, pd.prod_name, pd.prod_detail, pd.manufacture_day, pd.price, "
+				+ " pd.image_file, pd.reg_date, ta.tran_status_code"
+				+ " FROM product pd, transaction ta WHERE pd.prod_no = ta.prod_no(+) " ;
+						
 		if(search.getSearchCondition() != null) {
-			if (search.getSearchCondition().equals("0")) {
-				sql += " WHERE pd.prod_no LIKE ('%" + search.getSearchKeyword()
+			if (search.getSearchCondition().equals("0") && !search.getSearchKeyword().equals("")) {
+				sql += " AND pd.prod_no LIKE ('%" + search.getSearchKeyword()
 						+ "%') ";
 				
-			} else if (search.getSearchCondition().equals("1")) {
-				sql += " WHERE pd.prod_name LIKE ('%" + search.getSearchKeyword()
+			} else if (search.getSearchCondition().equals("1") && !search.getSearchKeyword().equals("")){
+				sql += " AND pd.prod_name LIKE ('%" + search.getSearchKeyword()
 						+ "%') ";
-			} else if (search.getSearchCondition().equals("2")){
-				sql += " WHERE pd.price LIKE ('%" + search.getSearchKeyword()
+			} else if (search.getSearchCondition().equals("2") && !search.getSearchKeyword().equals("")){
+				sql += " AND pd.price LIKE ('%" + search.getSearchKeyword()
 						+ "%')";
 			}		
-			/*
-			SELECT * 
-			FROM product pd, transaction ta 
-			WHERE pd.prod_no = ta.prod_no(+)   
-			ORDER BY pd.prod_no(+)
-			
-			
-			*/
+		
 			search.setSearchCondition(search.getSearchCondition());
 			System.out.println(search.getSearchCondition());
 			System.out.println(search.getSearchKeyword());
 			search.setSearchKeyword(search.getSearchKeyword());
 			
-			System.out.println(search+" searcVO 값 확인");
+			System.out.println(search+" searc 값 확인");
 		}
-		
-		
-		
-		
+  
 		sql += " ORDER BY pd.prod_no(+) ";
 		System.out.println("1-1번디버깅");
 		
@@ -98,8 +92,8 @@ public class ProductDAO {
 		
 		
 		List<Product > list = new ArrayList<Product >();
-		//List<Purchase> purList = new ArrayList<Purchase >();
-
+		List<Purchase> purList = new ArrayList<Purchase >();
+		
 			while(rs.next()) {
 				Product product = new Product();
 				Purchase purchase = new Purchase();
@@ -107,28 +101,29 @@ public class ProductDAO {
 				product.setProdName(rs.getString("prod_name"));
 				product.setPrice(rs.getInt("price"));
 				product.setRegDate(rs.getDate("reg_date"));
-			//	purchase.setPurchaseProd(product);
-				//purchase.setTranCode(rs.getString("tran_status_code"));
-				//vo.setProTranCode(rs.getString("proTranCode"));
+				purchase.setPurchaseProd(product);
+				purchase.setTranCode(rs.getString("tran_status_code"));
 			
+				
 				System.out.println("3번 if문안디버깅");
-				//System.out.println(rs.getString("tran_status_code"));
+				System.out.println(rs.getString("tran_status_code"));
 				list.add(product);
-				//purList.add(purchase);
-				//System.out.println(purList+"test");
-				//System.out.println("trancode 체크"+purchase.getTranCode());
+				purList.add(purchase);
+				System.out.println(purList+"test");
+				System.out.println("trancode 체크"+purchase.getTranCode());
 			}	
 
 		
 		map.put("list", list);
-		//map.put("purList", purList);
+		map.put("purList", purList);
 		map.put("totalCount", new Integer(totalCount));
 		System.out.println("map().size() : "+ map.size());
 		System.out.println("list.size() : "+ list.size());
-	//	System.out.println("purList.size() : "+ purList.size());
-		
 
-		
+		rs.close();
+		stmt.close();
+		con.close();
+
 		
 		return map;
 	}

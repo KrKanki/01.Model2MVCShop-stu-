@@ -155,7 +155,7 @@ function fncGetProductList(currentPage){
 				<%	
 				
 				
-			//String test=	purchase.getTranCode().toString();
+			//String test=	purchase. getTranCode().toString();
 				//System.out.println(test.equals("1"));
 				%><%-- =product.getProTranCode() --%>
 		

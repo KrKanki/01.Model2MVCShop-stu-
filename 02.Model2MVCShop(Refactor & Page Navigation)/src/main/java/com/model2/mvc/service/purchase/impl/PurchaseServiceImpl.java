@@ -3,9 +3,10 @@ package com.model2.mvc.service.purchase.impl;
 import java.util.HashMap;
 
 import com.model2.mvc.common.Search;
+import com.model2.mvc.service.domain.Purchase;
 import com.model2.mvc.service.purchase.PurchaseService;
 import com.model2.mvc.service.purchase.dao.PurchaseDAO;
-import com.model2.mvc.service.domain.Purchase;
+
 
 public class PurchaseServiceImpl implements PurchaseService {
 
@@ -27,7 +28,7 @@ public class PurchaseServiceImpl implements PurchaseService {
 	@Override
 	public Purchase getPurchase(int tranNo) throws Exception {
 		// TODO Auto-generated method stub
-		return null;
+		return purchaseDAO.getPurchase(tranNo);
 	}
 
 	@Override
@@ -39,8 +40,9 @@ public class PurchaseServiceImpl implements PurchaseService {
 
 	@Override
 	public HashMap<String, Object> getPurchaseList(Search search, String buyerId) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+
+		
+		return purchaseDAO.getPurchaseList(search, buyerId);
 	}
 
 	@Override
@@ -51,14 +53,15 @@ public class PurchaseServiceImpl implements PurchaseService {
 
 	@Override
 	public void updatePurcahse(Purchase purchase) throws Exception {
-		// TODO Auto-generated method stub
+		
+		purchaseDAO.updatePurcahse(purchase);
 
 	}
 
 	@Override
 	public void updateTranCode(Purchase purchase) throws Exception {
 		// TODO Auto-generated method stub
-
+		purchaseDAO.updateTranCode(purchase);
 	}
 
 }

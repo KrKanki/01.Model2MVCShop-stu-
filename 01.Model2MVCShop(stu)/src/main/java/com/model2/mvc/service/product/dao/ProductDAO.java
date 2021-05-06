@@ -118,10 +118,10 @@ public class ProductDAO {
 		}
 		System.out.println("list.size() : "+ list.size());
 		System.out.println("purList.size() : "+ purList.size());
-		map.put("list", list);
-		System.out.println("map().size() : "+ map.size());
-		map.put("purList", purList);
 		
+		
+		map.put("purList", purList);
+		map.put("list", list);
 		System.out.println("map().size() : "+ map.size());
 
 		con.close();
@@ -131,68 +131,68 @@ public class ProductDAO {
 		return map;
 	}
 
-	
-public ProductVO findProduct(int prodNo) throws Exception {
-	
-	Connection con = DBUtil.getConnection();
-	
-	String sql =  "SELECT * FROM product WHERE prod_no IN (?)"; 
-	
-	PreparedStatement stmt = con.prepareStatement(sql);
-	stmt.setInt(1, prodNo);
-	
-	ResultSet rs= stmt.executeQuery();
-	ProductVO productVO = null;
-	
-	while(rs.next()) {
-		productVO= new ProductVO();
-		productVO.setProdNo(rs.getInt("prod_no"));
-		productVO.setProdName(rs.getString("prod_name"));
-		productVO.setPrice(rs.getInt("price"));
-		productVO.setRegDate(rs.getDate("reg_date"));
-		productVO.setFileName(rs.getString("image_file"));
-		productVO.setProdDetail(rs.getString("prod_detail"));
-		productVO.setManuDate(rs.getString("manufacture_day"));
-		//productVO.setProTranCode(rs.getString("proTranCode"));
 		
+	public ProductVO findProduct(int prodNo) throws Exception {
+		
+		Connection con = DBUtil.getConnection();
+		
+		String sql =  "SELECT * FROM product WHERE prod_no IN (?)"; 
+		
+		PreparedStatement stmt = con.prepareStatement(sql);
+		stmt.setInt(1, prodNo);
+		
+		ResultSet rs= stmt.executeQuery();
+		ProductVO productVO = null;
+		
+		while(rs.next()) {
+			productVO= new ProductVO();
+			productVO.setProdNo(rs.getInt("prod_no"));
+			productVO.setProdName(rs.getString("prod_name"));
+			productVO.setPrice(rs.getInt("price"));
+			productVO.setRegDate(rs.getDate("reg_date"));
+			productVO.setFileName(rs.getString("image_file"));
+			productVO.setProdDetail(rs.getString("prod_detail"));
+			productVO.setManuDate(rs.getString("manufacture_day"));
+			//productVO.setProTranCode(rs.getString("proTranCode"));
+			
+		}
+		
+		con.close();	
+		
+		return productVO;
 	}
 	
-	con.close();	
-	
-	return productVO;
-}
-
-public void updateProduct(ProductVO productVO) throws Exception {
-	
-	System.out.println("userDAO updateProdcut 실행");
-	Connection con = DBUtil.getConnection();
-	
-	String sql = "UPDATE product SET "
-			+ " prod_name=?, prod_detail=?, manufacture_day=?, price=?, image_file=? "
-			+ " WHERE prod_no= ?";
-	
-	
-	PreparedStatement stmt = con.prepareStatement(sql);
-	stmt.setString(1, productVO.getProdName());			
-	stmt.setString(2, productVO.getProdDetail());		
-	stmt.setString(3, productVO.getManuDate());			
-	stmt.setInt(4, productVO.getPrice());				
-	stmt.setString(5, productVO.getFileName());
-	stmt.setInt(6, productVO.getProdNo());				
-	System.out.println(productVO.getProdName());
-	System.out.println(productVO.getProdDetail());
-	System.out.println(productVO.getManuDate());
-	System.out.println(productVO.getPrice());
-	System.out.println(productVO.getFileName());
-	System.out.println(productVO.getProdNo());
-	
-	
-	
-	
-	stmt.executeUpdate();
-	
-	con.close();	
-}
+	public void updateProduct(ProductVO productVO) throws Exception {
+		
+		System.out.println("userDAO updateProdcut 실행");
+		Connection con = DBUtil.getConnection();
+		
+		String sql = "UPDATE product SET "
+				+ " prod_name=?, prod_detail=?, manufacture_day=?, price=?, image_file=? "
+				+ " WHERE prod_no= ?";
+		
+		
+		PreparedStatement stmt = con.prepareStatement(sql);
+		stmt.setString(1, productVO.getProdName());			
+		stmt.setString(2, productVO.getProdDetail());		
+		stmt.setString(3, productVO.getManuDate());			
+		stmt.setInt(4, productVO.getPrice());				
+		stmt.setString(5, productVO.getFileName());
+		stmt.setInt(6, productVO.getProdNo());				
+		System.out.println(productVO.getProdName());
+		System.out.println(productVO.getProdDetail());
+		System.out.println(productVO.getManuDate());
+		System.out.println(productVO.getPrice());
+		System.out.println(productVO.getFileName());
+		System.out.println(productVO.getProdNo());
+		
+		
+		
+		
+		stmt.executeUpdate();
+		
+		con.close();	
+	}
 
 
 }	

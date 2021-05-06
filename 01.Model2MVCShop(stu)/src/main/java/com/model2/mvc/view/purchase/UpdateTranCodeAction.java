@@ -34,10 +34,10 @@ public class UpdateTranCodeAction extends Action {
 		System.out.println("purchaseVO.prodNo 眉农"+ purchaseVO.getPurchaseProd().getProdNo() );
 		System.out.println("tranCode 眉农"+ request.getParameter("tranCode") );	
 		
-		 System.out.println(userVO.getRegDate().equals("admin"));
-		if(userVO.getRegDate().equals("admin")) {
+		 System.out.println(userVO.getRole().equals("admin"));
+		if(userVO.getRole().equals("admin")) {
 		
-		System.out.println("\"forward:/listProduct.do?menu=manage\" 角青");
+		System.out.println("forward:/listProduct.do?menu=manage 角青");
 		return 	"forward:/listProduct.do?menu=manage";
 		}else {
 		System.out.println("forward:/listPurchase.do 角青");	
